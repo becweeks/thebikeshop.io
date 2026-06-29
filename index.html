@@ -54,14 +54,15 @@
     /* HAMBURGER */
     .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 300; }
     .hamburger span { display: block; width: 24px; height: 2px; background: #FFFDF4; border-radius: 2px; transition: all 0.2s; }
+    .hamburger.open span { background: #4D271B; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* DROPDOWN */
-    .dropdown { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 250; background: rgba(30,15,8,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,246,212,0.12); padding: 5rem 2rem 2rem; flex-direction: column; }
+    .dropdown { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 250; background: rgba(255,253,240,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(77,39,27,0.1); padding: 5rem 2rem 2rem; flex-direction: column; }
     .dropdown.open { display: flex; }
-    .dropdown a { color: #FFFDF4; text-decoration: none; font-size: 1.2rem; font-weight: 700; opacity: 0.6; padding: 1rem 0; border-bottom: 1px solid rgba(255,246,212,0.1); transition: opacity 0.2s; }
+    .dropdown a { color: #4D271B; text-decoration: none; font-size: 1.2rem; font-weight: 700; opacity: 0.6; padding: 1rem 0; border-bottom: 1px solid rgba(77,39,27,0.08); transition: opacity 0.2s; }
     .dropdown a:last-child { border-bottom: none; }
     .dropdown a:hover { opacity: 1; }
 
