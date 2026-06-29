@@ -41,7 +41,7 @@
 
     /* SECTION LABEL */
     .section { padding: 3rem 2.5rem 1rem; max-width: 1200px; margin: 0 auto; }
-    .section-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(77,39,27,0.4); border-top: 1px solid rgba(77,39,27,0.12); padding-top: 1.5rem; margin-bottom: 0; }
+    .section-label { font-family: Georgia, serif; font-size: 1.6rem; font-style: italic; font-weight: 400; color: var(--soil); border-top: 1px solid rgba(77,39,27,0.12); padding-top: 1.5rem; margin-bottom: 0; }
 
     /* LEADERSHIP CARDS (Directors + Leadership tiers) */
     .leader-grid { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
@@ -53,8 +53,8 @@
     .leader-card-inner { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; align-items: start; }
     .leader-photo { width: 200px; aspect-ratio: 1; object-fit: cover; object-position: top; display: block; filter: grayscale(15%); transition: filter 0.2s; }
     .leader-info { padding-top: 0.25rem; }
-    .leader-name { font-family: Georgia, serif; font-size: 1.1rem; font-style: italic; color: var(--soil); margin-bottom: 0.3rem; }
-    .leader-role { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(77,39,27,0.5); margin-bottom: 0.75rem; line-height: 1.4; }
+    .leader-name { font-family: Georgia, serif; font-size: 1.1rem; font-style: normal; color: var(--soil); margin-bottom: 0.3rem; }
+    .leader-role { font-family: Georgia, serif; font-size: 0.95rem; color: rgba(77,39,27,0.65); margin-bottom: 0.75rem; line-height: 1.55; }
     .leader-bio-preview { font-size: 0.85rem; line-height: 1.6; color: rgba(77,39,27,0.7); font-style: italic; }
     .leader-plus { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(77,39,27,0.45); margin-top: 1rem; display: block; transition: color 0.2s; }
     .leader-card:hover .leader-plus { color: var(--soil); }
@@ -107,7 +107,6 @@
       .hero { padding: 6rem 1.5rem 2rem; }
       .section { padding: 2rem 1.5rem 0.5rem; }
       .leader-grid { padding: 0 1.5rem; }
-      .leader-tier { grid-template-columns: 1fr; }
       .members-wrap { padding: 0 1.5rem 2rem; }
       .members-grid { grid-template-columns: repeat(2, 1fr); }
       .footer { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.5rem; }
