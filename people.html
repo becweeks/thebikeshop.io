@@ -69,7 +69,7 @@
     .member-photo { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; display: block; filter: grayscale(15%); transition: filter 0.2s; }
     .member-card:hover .member-photo { filter: grayscale(0%); }
     .member-info { padding: 0.6rem 0 0; }
-    .person-name { font-family: Georgia, serif; font-size: 0.9rem; font-style: italic; color: var(--soil); margin-bottom: 0.15rem; }
+    .person-name { font-family: Georgia, serif; font-size: 0.9rem; font-style: normal; color: var(--soil); margin-bottom: 0.15rem; }
     .person-title { font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(77,39,27,0.5); line-height: 1.4; }
     .member-plus { font-family: 'Helvetica Neue', sans-serif; font-size: 0.85rem; color: rgba(77,39,27,0.3); margin-top: 0.3rem; display: block; transition: transform 0.2s, color 0.2s; }
     .member-card:hover .member-plus { color: var(--soil); }
@@ -95,6 +95,7 @@
     .footer-copy { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,246,212,0.75); }
 
     @media (max-width: 960px) {
+      .leader-tier { grid-template-columns: 1fr; }
       .leader-card-inner { grid-template-columns: 160px 1fr; }
       .leader-photo { width: 160px; }
       .members-grid { grid-template-columns: repeat(3, 1fr); }
@@ -114,7 +115,7 @@
     }
     @media (max-width: 480px) {
       .leader-card-inner { grid-template-columns: 1fr; }
-      .leader-photo { width: 100%; aspect-ratio: 3/2; }
+      .leader-photo { width: 100%; aspect-ratio: 1; }
     }
   .footer-social { display: flex; gap: 1rem; align-items: center; margin-top: 0.25rem; }
   .footer-social-link { color: rgba(255,246,212,0.5); transition: color 0.2s; display: flex; align-items: center; }
