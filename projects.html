@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects – The Bike Shop</title>
+  <meta name="description" content="A sample of the bicycles for the mind we're building — from education to criminal justice to chemistry." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --soil: #4D271B; --eggshell: #FFF6D4; --eggshell-bg: #FFFDF0; --gold: #C9A84C; }
+    body { background: var(--eggshell-bg); color: var(--soil); font-family: Georgia, serif; }
+
+    /* SKIP LINK */
+    .skip-link { position: absolute; top: -100px; left: 1rem; z-index: 9999; background: var(--soil); color: var(--eggshell); padding: 0.6rem 1.2rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 0 0 4px 4px; transition: top 0.2s; }
+    .skip-link:focus { top: 0; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 2.5rem; background: rgba(255,253,240,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(77,39,27,0.1); -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; }
+    .nav-logo { height: 28px; width: auto; display: block; }
+    .nav-right { display: flex; align-items: center; }
+    .nav-links { display: flex; align-items: center; list-style: none; }
+    .nav-links a { color: var(--soil); text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 1.05rem; font-weight: 700; opacity: 0.6; transition: opacity 0.2s; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-pipe { color: rgba(77,39,27,0.25); padding: 0 1rem; font-size: 1.1rem; font-weight: 300; font-family: 'Helvetica Neue', sans-serif; user-select: none; }
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--soil); border-radius: 2px; transition: all 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .dropdown { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 250; background: rgba(255,253,240,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(77,39,27,0.1); padding: 5rem 2rem 2rem; flex-direction: column; }
+    .dropdown.open { display: flex; }
+    .dropdown a { color: var(--soil); text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 1.2rem; font-weight: 700; opacity: 0.6; padding: 1rem 0; border-bottom: 1px solid rgba(77,39,27,0.08); transition: opacity 0.2s; }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover, .dropdown a.active { opacity: 1; }
+
+    /* HERO */
+    .hero { padding: 8rem 2.5rem 3rem; max-width: 1200px; margin: 0 auto; }
+    .hero-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(77,39,27,0.45); margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 400; font-style: italic; line-height: 1.1; color: var(--soil); }
+
+    /* GRID */
+    .grid-section { padding: 0 2.5rem 2rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; }
+
+    /* CARDS */
+    .card { background: var(--soil); color: var(--eggshell); padding: 2.5rem; cursor: pointer; position: relative; border: 1px solid rgba(255,246,212,0.06); transition: background 0.25s; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
+    .card:focus { outline: 2px solid rgba(255,246,212,0.6); outline-offset: 2px; }
+    .card:hover, .card.open { background: #5e3122; }
+    .card-num { font-family: 'Helvetica Neue', sans-serif; font-size: 0.6rem; letter-spacing: 0.12em; color: rgba(255,246,212,0.35); margin-bottom: 1rem; display: block; }
+    .card-title { font-family: Georgia, serif; font-style: italic; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.35; flex: 1; }
+    .card-hint { font-family: 'Helvetica Neue', sans-serif; font-size: 1.1rem; color: rgba(255,246,212,0.35); align-self: flex-end; margin-top: 1.5rem; transition: transform 0.2s, color 0.2s; }
+    .card:hover .card-hint, .card.open .card-hint { color: var(--eggshell); transform: rotate(45deg); }
+
+    /* EXPAND ROW */
+    .expand-row { grid-column: 1 / -1; max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1); background: var(--eggshell); cursor: pointer; }
+    .expand-row.open { max-height: 1200px; }
+    .expand-inner { padding: 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease 0.15s, transform 0.35s cubic-bezier(0.16,1,0.3,1) 0.15s; }
+    .expand-row.open .expand-inner { opacity: 1; transform: translateY(0); }
+    .expand-title { font-family: Georgia, serif; font-style: italic; font-size: 1.15rem; line-height: 1.4; color: var(--soil); }
+    .expand-body p { font-size: 0.95rem; line-height: 1.75; color: rgba(77,39,27,0.85); margin-bottom: 1.2rem; }
+    .expand-body p:last-child { margin-bottom: 0; }
+    .expand-body a { color: var(--soil); text-underline-offset: 3px; }
+    .expand-body a:hover { opacity: 0.7; }
+
+    /* PARTNER BAND */
+
+    /* FOOTER */
+    .footer { background: var(--soil); padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
+    .footer-left { display: flex; flex-direction: column; gap: 0.45rem; align-items: flex-start; }
+    .footer-logo { height: 16px; width: auto; align-self: flex-start; opacity: 0.9; margin-bottom: 0.1rem; }
+    .footer-left span { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,246,212,0.75); }
+    .footer-right { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; }
+    .footer-copy { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,246,212,0.75); }
+
+    @media (max-width: 900px) { .expand-inner { grid-template-columns: 1fr; gap: 1.5rem; } }
+    @media (max-width: 600px) {
+      .nav { padding: 1rem 1.5rem; }
+      .nav-logo { height: 22px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 6rem 1.5rem 2rem; }
+      .grid-section { padding: 0 1.5rem 2rem; }
+      .expand-inner { padding: 2rem 1.5rem; }
+      .footer { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.5rem; }
+      .footer-right { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav class="nav" aria-label="Main navigation">
+  <a href="index.html">
+    <img class="nav-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-SOIL.png" alt="The Bike Shop" />
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="what-we-do.html">What we do</a></li>
+      <li><span class="nav-pipe">|</span></li>
+      <li><a href="people.html">People</a></li>
+      <li><span class="nav-pipe">|</span></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="dropdown" id="dropdown">
+  <a href="what-we-do.html">What we do</a>
+  <a href="people.html">People</a>
+  <a href="projects.html" class="active">Projects</a>
+</div>
+
+<div id="main">
+
+  <div class="hero">
+    <p class="hero-label">Projects</p>
+    <h1>Our Work</h1>
+  </div>
+
+  <div class="grid-section">
+    <div class="grid" id="project-grid">
+
+      <div class="card" role="button" tabindex="0" data-idx="0" onclick="toggleProject(this)">
+        <span class="card-num">01</span>
+        <div class="card-title">Education Foundation Model</div>
+        <span class="card-hint">+</span>
+      </div>
+      <div class="card" role="button" tabindex="0" data-idx="1" onclick="toggleProject(this)">
+        <span class="card-num">02</span>
+        <div class="card-title">Theory-Scaffolded Learning</div>
+        <span class="card-hint">+</span>
+      </div>
+      <div class="expand-row" id="er-A"><div class="expand-inner" id="er-A-inner"></div></div>
+
+      <div class="card" role="button" tabindex="0" data-idx="2" onclick="toggleProject(this)">
+        <span class="card-num">03</span>
+        <div class="card-title">Pre-Trial Bail Decision-Making</div>
+        <span class="card-hint">+</span>
+      </div>
+      <div class="card" role="button" tabindex="0" data-idx="3" onclick="toggleProject(this)">
+        <span class="card-num">04</span>
+        <div class="card-title">Learning from the Best: What Top Investigators See That Others Miss</div>
+        <span class="card-hint">+</span>
+      </div>
+      <div class="expand-row" id="er-B"><div class="expand-inner" id="er-B-inner"></div></div>
+
+      <div class="card" role="button" tabindex="0" data-idx="4" onclick="toggleProject(this)">
+        <span class="card-num">05</span>
+        <div class="card-title">From Next-Token Prediction to Automata Induction</div>
+        <span class="card-hint">+</span>
+      </div>
+      <div class="card" role="button" tabindex="0" data-idx="5" onclick="toggleProject(this)">
+        <span class="card-num">06</span>
+        <div class="card-title">Situational Decision-Making</div>
+        <span class="card-hint">+</span>
+      </div>
+      <div class="expand-row" id="er-C"><div class="expand-inner" id="er-C-inner"></div></div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-left">
+    <img class="footer-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-EGGSHELL.png" alt="The Bike Shop" />
+    <span>The Bike Shop</span>
+    <span>Massachusetts Institute of Technology &amp; University of Chicago</span>
+    <!-- <span><a href="mailto:contact@thebikeshop.io" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">contact@thebikeshop.io</a></span> -->
+  </div>
+  <div class="footer-right">
+    <span class="footer-copy">© 2026 The Bike Shop</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var rowMap = ['A','A','B','B','C','C'];
+
+  var projects = [
+    { title: 'Education Foundation Model', body: '<p>The usual ambition for AI in education—an algorithm that teaches like the best teacher—ignores a basic fact: even the best teacher struggles.</p><p>Teaching is a bundle of decisions. Which explanation to give? What practice problems and homework to assign? Who to call on in class? Which students to pair to work together?</p><p>These decisions rely on pinpointing why a student is confused. But that is a very hard task: even the set of possible confusions is unknown. The teacher\'s job is to guide students out of the maze of confusion, but they are forced to do so without a map; they are left with trial and error.</p><p>Our approach: build that map. Trained on novel student thought processes, our model can transform education. Student assessment is no longer a single number but a rich description of what they do not understand.</p><p>Armed with that, teachers can pinpoint confusions and move past trial-and-error, improving every pedagogical choice. It can cut learning time from months to weeks, not to mention reduce the frustration of both students and teachers.</p>' },
+    { title: 'Theory-Scaffolded Learning: Embedding Chemistry Knowledge into Predictive Models', body: '<p>Machine learning algorithms excel at fitting to data, yet they frequently fail to generalize reliably beyond their training distributions. Theories, on the other hand, possess a leverage that algorithms alone cannot match: their insights generalize to radically different contexts and problems.</p><p>In this project, we propose a novel bicycle for scientists that captures the best of both worlds: a theory-scaffolded model that derives its robustness from underlying scientific theories while retaining the flexibility to learn from data. Bridging this gap requires a new computational approach, as formal theories and neural networks operate on fundamentally different primitives.</p><p>We ground this abstract problem in chemistry, specifically the challenge of predicting the outcomes of chemical reactions. While current ML models predict well within the bounds of existing reaction datasets, they perform much worse than human chemists on novel, out-of-distribution reactions. We are building a computable model of chemistry knowledge, where foundational chemical theories (such as electrostatics and orbital resonance) act as the structural scaffold, and flexible neural networks are fitted to the experimental data.</p>' },
+    { title: 'Pre-Trial Bail Decision-Making', body: '<p>At the start of every criminal case a judge has to make a critical decision: where a defendant should await trial, at home or in jail. By law this decision is supposed to hinge on an assessment of the defendant\'s risk of skipping court or getting re-arrested, which makes this a canonical example of a <a href="https://www.aeaweb.org/articles?id=10.1257/aer.p20151023" target="_blank">prediction policy problem</a>.</p><p>A large body of behavioral science suggests judges, like all people, will struggle with this sort of prediction. The result of judge misprediction? Large numbers of low-risk people being needlessly detained, while simultaneously large numbers of high-risk people get released.</p><p>Our Bike Shop team, as part of a larger consortium (the University of Chicago Crime Lab, the <a href="https://criminaljustice.cityofnewyork.us/" target="_blank">Mayor\'s Office of Criminal Justice</a>, the <a href="https://www.nycja.org/" target="_blank">Criminal Justice Agency</a>, and Luminosity), built an algorithmic decision aid for judges in New York City that our preliminary data suggest has dramatically reduced jailing rates without increasing crime or failure-to-appear in court by helping judges prioritize detention just for those who are truly high risk. That tool has been used literally hundreds of thousands of times in every courtroom across the city since it was first deployed in late 2019.</p>' },
+    { title: 'Learning from the Best: What Top Investigators See That Others Miss', body: '<p>When hundreds of child protective services investigators decide whether to place a child in foster care, their decisions vary enormously in quality — and experience alone doesn\'t explain why. We use machine learning not to replace these investigators but to learn from the best among them, identifying the case characteristics that high-performing investigators consistently notice and that turn out to be strongly predictive of child risk. The result is a blueprint for coaching: rather than building a better algorithm, we can scale the judgment of top performers across the entire system, helping every investigator learn to see what the best ones already see.</p>' },
+    { title: 'From Next-Token Prediction to Automata Induction', body: '<p>Economic life is awash in sequence data — career transitions as workers move between jobs and industries, the strategies people and firms adopt in strategic interactions, the choices consumers make over time — yet we lack general tools for extracting interpretable structure from these sequences. We develop an econometric framework that takes any black-box next-token predictor (including modern transformers) and distills it into a finite automaton: a compact, interpretable summary of the rules governing sequential behavior. The framework offers researchers and policymakers a principled way to look inside the black box of sequence prediction and extract insights they can report, interpret, and act on.</p>' },
+    { title: 'Situational Decision-Making', body: '<p>Led by Oeindrila Dube, the Philip K. Pearson Professor at the University of Chicago, this project asks: What if it were possible to substantially improve the outcomes of American policing by combining AI with insights from behavioral science to help officers navigate the countless high-stakes decisions they have to make every shift?</p><p><a href="https://crimelab.uchicago.edu/projects/situational-decision-making/" target="_blank">Learn more about the Situational Decision-Making program →</a></p>' }
+  ];
+
+  var activeIdx = null;
+  var NAV_H = 70;
+
+  function scrollToEl(el) {
+    var top = el.getBoundingClientRect().top + window.scrollY - NAV_H - 16;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+
+  function closeAll() {
+    if (activeIdx !== null) {
+      var openCard = document.querySelector('.card[data-idx="' + activeIdx + '"]');
+      var openRow = document.getElementById('er-' + rowMap[activeIdx]);
+      if (openCard) openCard.classList.remove('open');
+      if (openRow) { openRow.classList.remove('open'); openRow.onclick = null; }
+      activeIdx = null;
+    }
+  }
+
+  window.toggleProject = function(card) {
+    var idx = parseInt(card.getAttribute('data-idx'));
+    var rowId = 'er-' + rowMap[idx];
+
+    if (activeIdx === idx) {
+      scrollToEl(card);
+      setTimeout(function(){
+        card.classList.remove('open');
+        document.getElementById(rowId).classList.remove('open');
+        document.getElementById(rowId).onclick = null;
+        activeIdx = null;
+      }, 50);
+      return;
+    }
+
+    closeAll();
+
+    var targetCard = card;
+    var targetRowId = rowId;
+    var targetIdx = idx;
+
+    setTimeout(function(){
+      var p = projects[targetIdx];
+      document.getElementById(targetRowId + '-inner').innerHTML =
+        '<div class="expand-title">' + p.title + '</div>' +
+        '<div class="expand-body">' + p.body + '</div>';
+
+      targetCard.classList.add('open');
+      var expandRow = document.getElementById(targetRowId);
+      expandRow.classList.add('open');
+
+      expandRow.onclick = function() {
+        scrollToEl(targetCard);
+        setTimeout(function(){
+          targetCard.classList.remove('open');
+          expandRow.classList.remove('open');
+          expandRow.onclick = null;
+          activeIdx = null;
+        }, 50);
+      };
+
+      activeIdx = targetIdx;
+      setTimeout(function(){ scrollToEl(expandRow); }, 120);
+    }, 380);
+  };
+
+  // Keyboard activation
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    if (e.target.classList.contains('card')) { e.preventDefault(); window.toggleProject(e.target); }
+  });
+})();
+
+// Hamburger
+window.toggleMenu = function() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('dropdown').classList.toggle('open');
+};
+document.addEventListener('click', function(e) {
+  var btn = document.getElementById('hamburger');
+  var drop = document.getElementById('dropdown');
+  if (drop.classList.contains('open') && !drop.contains(e.target) && !btn.contains(e.target)) {
+    btn.classList.remove('open'); drop.classList.remove('open');
+  }
+});
+</script>
+
+</body>
+</html>

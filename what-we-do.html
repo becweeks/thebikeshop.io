@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What We Do – The Bike Shop</title>
+  <meta name="description" content="We build bicycles for the mind — algorithms and AI that enhance human capacity, not replace it." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --soil: #4D271B; --eggshell: #FFF6D4; --eggshell-bg: #FFFDF0; --gold: #C9A84C; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--eggshell-bg); color: var(--soil); font-family: Georgia, serif; }
+
+    /* SKIP LINK */
+    .skip-link { position: absolute; top: -100px; left: 1rem; z-index: 9999; background: var(--soil); color: var(--eggshell); padding: 0.6rem 1.2rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 0 0 4px 4px; transition: top 0.2s; }
+    .skip-link:focus { top: 0; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.3rem 2.5rem;
+      background: rgba(255,253,240,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(77,39,27,0.1);
+      -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform;
+    }
+    .nav-logo { height: 28px; width: auto; display: block; }
+    .nav-right { display: flex; align-items: center; }
+    .nav-links { display: flex; align-items: center; list-style: none; }
+    .nav-links a { color: var(--soil); text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 1.05rem; font-weight: 700; opacity: 0.6; transition: opacity 0.2s; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-pipe { color: rgba(77,39,27,0.25); padding: 0 1rem; font-size: 1.1rem; font-weight: 300; font-family: 'Helvetica Neue', sans-serif; user-select: none; }
+
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--soil); border-radius: 2px; transition: all 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .dropdown { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 250; background: rgba(255,253,240,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(77,39,27,0.1); padding: 5rem 2rem 2rem; flex-direction: column; }
+    .dropdown.open { display: flex; }
+    .dropdown a { color: var(--soil); text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 1.2rem; font-weight: 700; opacity: 0.6; padding: 1rem 0; border-bottom: 1px solid rgba(77,39,27,0.08); transition: opacity 0.2s; }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover, .dropdown a.active { opacity: 1; }
+
+    /* MAIN */
+    .main { padding: 8rem 2.5rem 5rem; max-width: 1200px; margin: 0 auto; }
+    .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(77,39,27,0.45); margin-bottom: 2rem; }
+    h1 { font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; font-style: italic; line-height: 1.05; letter-spacing: -0.01em; color: var(--soil); margin-bottom: 3rem; }
+    .rule { width: 48px; height: 1px; background: rgba(77,39,27,0.2); margin-bottom: 3rem; }
+
+    .pullquote { border-left: 3px solid var(--gold); padding-left: 2rem; margin-bottom: 2.5rem; }
+    .pullquote p { font-style: italic; font-size: clamp(1rem, 1.8vw, 1.15rem); line-height: 1.7; color: rgba(77,39,27,0.75); margin-bottom: 1.2rem; }
+    .pullquote p:last-child { margin-bottom: 0; }
+
+    .body-text { font-size: clamp(1rem, 1.6vw, 1.1rem); line-height: 1.75; color: var(--soil); margin-bottom: 2rem; }
+    .body-text em { font-style: italic; }
+
+    .figure { margin: 2.5rem 0; }
+    .figure { text-align: center; }
+    .figure img { width: 100%; max-width: 600px; height: auto; display: inline-block; }
+    .figure figcaption { text-align: left; max-width: 600px; margin: 0 auto; }
+    .figure figcaption { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; color: rgba(77,39,27,0.5); margin-top: 0.75rem; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .figure figcaption a { color: rgba(77,39,27,0.6); text-underline-offset: 3px; }
+    .figure figcaption a:hover { color: var(--soil); }
+
+    .statement { background: var(--soil); color: var(--eggshell); padding: 2.5rem 3rem; margin: 2.5rem 0; }
+    .statement p { font-size: clamp(1.05rem, 1.8vw, 1.2rem); line-height: 1.7; }
+    .statement strong { color: var(--gold); font-weight: 400; font-style: italic; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* FOOTER */
+    .footer { background: var(--soil); padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
+    .footer-left { display: flex; flex-direction: column; gap: 0.45rem; align-items: flex-start; }
+    .footer-logo { height: 16px; width: auto; align-self: flex-start; opacity: 0.9; margin-bottom: 0.1rem; }
+    .footer-left span { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,246,212,0.75); }
+    .footer-right { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; }
+    .footer-copy { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,246,212,0.75); }
+
+    @media (max-width: 640px) {
+      .nav { padding: 1rem 1.5rem; }
+      .nav-logo { height: 22px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .main { padding: 6rem 1.5rem 4rem; }
+      .statement { padding: 2rem 1.5rem; }
+      .footer { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.5rem; }
+      .footer-right { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav class="nav" aria-label="Main navigation">
+  <a href="index.html">
+    <img class="nav-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-SOIL.png" alt="The Bike Shop" />
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="what-we-do.html" class="active">What we do</a></li>
+      <li><span class="nav-pipe">|</span></li>
+      <li><a href="people.html">People</a></li>
+      <li><span class="nav-pipe">|</span></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="dropdown" id="dropdown">
+  <a href="what-we-do.html" class="active">What we do</a>
+  <a href="people.html">People</a>
+  <a href="projects.html">Projects</a>
+</div>
+
+<main class="main" id="main">
+
+  <p class="label reveal">What We Do</p>
+
+  <h1 class="reveal">Bicycles<br>for the mind.</h1>
+
+  <div class="rule reveal"></div>
+
+  <div class="pullquote reveal">
+    <p>The March 1973 issue of <em>Scientific American</em> included a curious infographic. It charted the efficiency of animal locomotion: the kilocalories needed to move a kilogram a kilometer. Least efficient animal: the mouse. Most efficient, surprisingly: the salmon.</p>
+    <p>The curious part was an outlier. Peak efficiency belonged to something that was not properly an animal. A point on the graph that was simply labeled "Man on Bicycle." It stood out from all other animals (including humans au naturel, who are of middling efficiency).</p>
+  </div>
+
+  <p class="body-text reveal">That figure, ostensibly about kinematics, occupies a cherished place in the folklore of computer science because of what it inspired — a vision of what computers could be: <em>bicycles for the mind.</em></p>
+
+  <figure class="figure reveal">
+    <img src="https://sites.mit.edu/thebikeshop/files/2026/03/scientific-american-graph.jpg" alt="Scientific American locomotion efficiency chart, March 1973" />
+    <figcaption>S. S. Wilson, "Bicycle Technology," <em>Scientific American</em>, Vol. 228, No. 3 (March 1973), p. 81. <a href="https://www.scientificamerican.com/article/a-human-on-a-bicycle-is-among-the-most-efficient-forms-of-travel-in-the/" target="_blank" rel="noopener">Scientific American updated the classic chart in 2025 →</a></figcaption>
+  </figure>
+
+  <p class="body-text reveal">Unfortunately, a different vision animates AI today: replacements for the mind. To us, that is a pretty uninspiring vision of the future. Automation cuts costs but does little to raise the ceiling. Merely replicating human capability also means we are limited by the limits of human capacity.</p>
+
+  <p class="body-text reveal">Why settle for those limits?</p>
+
+  <div class="statement reveal">
+    <p>At The Bike Shop, we are committed to building <strong>bicycles</strong> — algorithms and AI that <strong>enhance</strong> human capacity, not replace it.</p>
+  </div>
+
+  <p class="body-text reveal">Based at MIT and the University of Chicago, The Bike Shop brings together economists and computer scientists to tackle core social and computational challenges.</p>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-left">
+    <img class="footer-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-EGGSHELL.png" alt="The Bike Shop" />
+    <span>The Bike Shop</span>
+    <span>Massachusetts Institute of Technology &amp; University of Chicago</span>
+    <!-- <span><a href="mailto:contact@thebikeshop.io" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">contact@thebikeshop.io</a></span> -->
+  </div>
+  <div class="footer-right">
+    <span class="footer-copy">© 2026 The Bike Shop</span>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+
+// Hamburger
+window.toggleMenu = function() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('dropdown').classList.toggle('open');
+};
+document.addEventListener('click', function(e) {
+  var btn = document.getElementById('hamburger');
+  var drop = document.getElementById('dropdown');
+  if (drop.classList.contains('open') && !drop.contains(e.target) && !btn.contains(e.target)) {
+    btn.classList.remove('open');
+    drop.classList.remove('open');
+  }
+});
+</script>
+
+</body>
+</html>

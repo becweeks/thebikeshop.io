@@ -6,8 +6,6 @@
   <title>The Bike Shop</title>
   <meta name="description" content="Building algorithms that enhance human capacity. A research lab at the intersection of economics and computer science." />
   <link rel="icon" type="image/png" href="favicon.png" />
-
-  <!-- Open Graph -->
   <meta property="og:title" content="The Bike Shop" />
   <meta property="og:description" content="Building algorithms that enhance human capacity. A research lab at the intersection of economics and computer science." />
   <meta property="og:url" content="https://thebikeshop.io" />
@@ -15,262 +13,146 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="1200" />
   <meta property="og:type" content="website" />
-
-  <!-- Twitter / WhatsApp / iMessage -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Bike Shop" />
   <meta name="twitter:description" content="Building algorithms that enhance human capacity. A research lab at the intersection of economics and computer science." />
   <meta name="twitter:image" content="https://thebikeshop.io/og-image-square.jpg" />
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --soil: #4D271B;
       --eggshell: #FFF6D4;
-      --eggshell-25: #FFFDF0;
-      --blue: #B1C4F0;
+      --eggshell-dim: rgba(255,246,212,0.75);
+      --eggshell-faint: rgba(255,246,212,0.15);
     }
 
-    html, body {
-      height: 100%;
-      background: var(--soil);
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      color: var(--eggshell);
-      overflow-x: hidden;
-    }
+    html, body { height: 100%; background: var(--soil); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden; }
 
-    /* ── BACKGROUND PHOTO ── */
-    .bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-    }
-    .bg img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-    .bg-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      background: rgba(0,0,0,0.52);
-    }
+    /* SKIP LINK */
+    .skip-link { position: absolute; top: -100px; left: 1rem; z-index: 9999; background: var(--soil); color: var(--eggshell); padding: 0.6rem 1.2rem; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 0 0 4px 4px; transition: top 0.2s; }
+    .skip-link:focus { top: 0; }
 
-    /* ── LAYOUT ── */
+    /* BACKGROUND */
+    html, body { height: 100%; }
     .page {
-      position: relative;
-      z-index: 2;
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 2rem 5rem;
-      text-align: center;
-    }
-
-    /* ── LOGO ── */
-    .logo {
-      width: min(520px, 72vw);
-      height: auto;
-      margin-bottom: 1.4rem;
-      filter: drop-shadow(0 2px 20px rgba(0,0,0,0.25));
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 1.2s 0.2s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-
-    /* ── TAGLINE ── */
-    .tagline {
-      font-family: 'Georgia', serif;
-      font-style: italic;
-      font-size: clamp(0.9rem, 1.6vw, 1.1rem);
-      color: var(--eggshell);
-      letter-spacing: 0.01em;
-      line-height: 1.5;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeUp 1.2s 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
-      text-shadow: 0 1px 12px rgba(0,0,0,0.4);
-      margin-bottom: 4rem;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      width: 40px;
-      height: 1px;
-      background: rgba(255,246,212,0.3);
-      margin: 0 auto 3.5rem;
-      opacity: 0;
-      animation: fadeUp 1s 0.85s ease forwards;
-    }
-
-    /* ── LAB CARDS ── */
-    .labs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5px;
-      width: min(780px, 90vw);
-      opacity: 0;
-      animation: fadeUp 1s 1s ease forwards;
-    }
-
-    .lab {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2.8rem 2.5rem;
-      background: rgba(255,246,212,0.06);
-      backdrop-filter: blur(10px);
-      text-decoration: none;
-      color: var(--eggshell);
-      transition: background 0.3s ease;
+      background-image: linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)), url('Bike-Shop-splash-light.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       position: relative;
-      overflow: hidden;
     }
 
-    .lab::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,246,212,0.0);
-      transition: background 0.3s ease;
+    /* NAV */
+    .nav {
+      position: absolute; top: 0; right: 0; z-index: 10;
+      padding: 1.4rem 2.2rem;
+      display: flex; align-items: center; gap: 0;
+      -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform;
     }
+    .nav a { color: var(--eggshell); text-decoration: none; font-size: 1.05rem; font-weight: 700; opacity: 1; transition: opacity 0.2s; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+    .nav a:hover { opacity: 0.75; }
+    .nav-pipe { color: rgba(255,246,212,0.5); font-weight: 300; font-size: 1.1rem; padding: 0 1rem; user-select: none; }
 
-    .lab:hover { background: rgba(255,246,212,0.12); }
-    .lab:hover::before { background: rgba(255,246,212,0.04); }
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 300; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--eggshell); border-radius: 2px; transition: all 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .lab:first-child { border-radius: 4px 0 0 4px; }
-    .lab:last-child  { border-radius: 0 4px 4px 0; }
+    /* DROPDOWN */
+    .dropdown { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 250; background: rgba(30,15,8,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,246,212,0.12); padding: 5rem 2rem 2rem; flex-direction: column; }
+    .dropdown.open { display: flex; }
+    .dropdown a { color: var(--eggshell); text-decoration: none; font-size: 1.2rem; font-weight: 700; opacity: 0.6; padding: 1rem 0; border-bottom: 1px solid rgba(255,246,212,0.1); transition: opacity 0.2s; }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover { opacity: 1; }
 
-    .lab-location {
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,246,212,0.45);
-      margin-bottom: 0.9rem;
-      font-weight: 600;
-    }
+    /* CONTENT */
+    .content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem 2rem 4rem; text-align: center; }
+    .logo { width: min(520px, 72vw); height: auto; margin-bottom: 1.4rem; }
+    .tagline { font-family: Georgia, serif; font-style: italic; font-size: 1.1rem; color: #FFFDF4; line-height: 1.5; margin-bottom: 0; }
 
-    .lab-name {
-      font-family: 'Georgia', serif;
-      font-weight: 400;
-      font-style: italic;
-      font-size: clamp(1.1rem, 2vw, 1.45rem);
-      line-height: 1.25;
-      color: var(--eggshell);
-      margin-bottom: 1.4rem;
-    }
+    /* FOOTER */
+    .footer { background: var(--soil); padding: 1.25rem 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; position: relative; z-index: 2; }
+    .footer-left { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-start; }
+    .footer-logo { height: 14px; width: auto; align-self: flex-start; opacity: 0.85; margin-bottom: 0.1rem; }
+    .footer-left span { font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--eggshell-dim); }
+    .footer-right { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
+    .footer-copy { font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--eggshell-dim); }
 
-    .lab-arrow {
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,246,212,0.35);
-      transition: color 0.2s, transform 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .lab-arrow::after {
-      content: '→';
-      display: inline-block;
-      transition: transform 0.2s;
-    }
-    .lab:hover .lab-arrow { color: rgba(255,246,212,0.75); }
-    .lab:hover .lab-arrow::after { transform: translateX(3px); }
 
-    /* ── SEPARATOR between cards ── */
-    .lab-sep {
-      width: 1.5px;
-      background: rgba(255,246,212,0.1);
-      align-self: stretch;
-    }
+    @media (prefers-reduced-motion: reduce) { .logo, .tagline { animation: none; opacity: 1; transform: none; } }
 
-    /* ── FOOTER ── */
-    .footer {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 3;
-      background: rgba(77,39,27,0.85);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.7rem 2rem;
-      border-top: 1px solid rgba(255,246,212,0.08);
-    }
-
-    .footer-copy {
-      font-size: 0.6rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,246,212,0.3);
-    }
-
-    /* ── ANIMATION ── */
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── MOBILE ── */
-    @media (max-width: 560px) {
-      .labs {
-        grid-template-columns: 1fr;
-        gap: 1.5px;
-        width: min(400px, 90vw);
-      }
-      .lab:first-child { border-radius: 4px 4px 0 0; }
-      .lab:last-child  { border-radius: 0 0 4px 4px; }
-      .lab { padding: 2.2rem 2rem; }
-      .lab-sep { display: none; }
+    @media (max-width: 600px) {
+      .nav { padding: 1rem 1.5rem; }
+      .nav a, .nav-pipe { display: none; }
+      .hamburger { display: flex; }
+      .footer { grid-template-columns: 1fr; gap: 1.25rem; padding: 1.5rem; }
+      .footer-right { align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Background photo -->
-  <div class="bg">
-    <img src="Bike-Shop-splash.jpg"
-         alt="" role="presentation" />
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<div class="page">
+
+  <nav class="nav" aria-label="Main navigation">
+    <a href="what-we-do.html">What we do</a>
+    <span class="nav-pipe">|</span>
+    <a href="people.html">People</a>
+    <span class="nav-pipe">|</span>
+    <a href="projects.html">Projects</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="dropdown" id="dropdown">
+    <a href="what-we-do.html">What we do</a>
+    <a href="people.html">People</a>
+    <a href="projects.html">Projects</a>
   </div>
-  <div class="bg-overlay"></div>
 
-  <main class="page" id="main">
-
+  <main class="content" id="main">
     <img class="logo"
          src="MIT_THEBIKESHOP_LOGO-EGGSHELL.png"
          alt="The Bike Shop" />
-
     <p class="tagline">Building algorithms that enhance human capacity</p>
-
-    <div class="divider"></div>
-
-    <nav class="labs" aria-label="Lab locations">
-
-      <a class="lab" href="https://sites.mit.edu/thebikeshop/" target="_blank" rel="noopener">
-        <span class="lab-location">Cambridge, MA</span>
-        <span class="lab-name">The Bike Shop<br>@ MIT</span>
-        <span class="lab-arrow">Visit</span>
-      </a>
-
-      <a class="lab" href="https://voices.uchicago.edu/thebikeshop/" target="_blank" rel="noopener">
-        <span class="lab-location">Chicago, IL</span>
-        <span class="lab-name">The Bike Shop<br>@ UChicago</span>
-        <span class="lab-arrow">Visit</span>
-      </a>
-
-    </nav>
-
   </main>
 
-  <footer class="footer">
+</div>
+
+<footer class="footer">
+  <div class="footer-left">
+    <img class="footer-logo" src="MIT_THEBIKESHOP_LOGO-EGGSHELL.png" alt="The Bike Shop" />
+    <span>The Bike Shop</span>
+    <span>Massachusetts Institute of Technology &amp; University of Chicago</span>
+  </div>
+  <div class="footer-right">
     <span class="footer-copy">© 2026 The Bike Shop</span>
-  </footer>
+  </div>
+</footer>
+
+<script>
+window.toggleMenu = function() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('dropdown').classList.toggle('open');
+};
+document.addEventListener('click', function(e) {
+  var btn = document.getElementById('hamburger');
+  var drop = document.getElementById('dropdown');
+  if (drop.classList.contains('open') && !drop.contains(e.target) && !btn.contains(e.target)) {
+    btn.classList.remove('open');
+    drop.classList.remove('open');
+  }
+});
+</script>
 
 </body>
 </html>

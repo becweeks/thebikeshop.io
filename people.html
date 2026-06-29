@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>People – The Bike Shop</title>
+  <meta name="description" content="Meet the researchers, fellows, and students behind The Bike Shop." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --soil: #4D271B; --eggshell: #FFF6D4; --eggshell-bg: #FFFDF0; --gold: #C9A84C; }
+    body { background: var(--eggshell-bg); color: var(--soil); font-family: Georgia, serif; }
+
+    /* SKIP LINK */
+    .skip-link { position: absolute; top: -100px; left: 1rem; z-index: 9999; background: var(--soil); color: var(--eggshell); padding: 0.6rem 1.2rem; font-family: 'Helvetica Neue', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 0 0 4px 4px; transition: top 0.2s; }
+    .skip-link:focus { top: 0; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 2.5rem; background: rgba(255,253,240,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(77,39,27,0.1); -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; }
+    .nav-logo { height: 28px; width: auto; display: block; }
+    .nav-right { display: flex; align-items: center; }
+    .nav-links { display: flex; align-items: center; list-style: none; }
+    .nav-links a { color: var(--soil); text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 1.05rem; font-weight: 700; opacity: 0.6; transition: opacity 0.2s; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-pipe { color: rgba(77,39,27,0.25); padding: 0 1rem; font-size: 1.1rem; font-weight: 300; font-family: 'Helvetica Neue', sans-serif; user-select: none; }
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--soil); border-radius: 2px; transition: all 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .dropdown { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 250; background: rgba(255,253,240,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(77,39,27,0.1); padding: 5rem 2rem 2rem; flex-direction: column; }
+    .dropdown.open { display: flex; }
+    .dropdown a { color: var(--soil); text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 1.2rem; font-weight: 700; opacity: 0.6; padding: 1rem 0; border-bottom: 1px solid rgba(77,39,27,0.08); transition: opacity 0.2s; }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover, .dropdown a.active { opacity: 1; }
+
+    /* HERO */
+    .hero { padding: 8rem 2.5rem 3rem; max-width: 1200px; margin: 0 auto; }
+    .hero-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(77,39,27,0.45); margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 400; font-style: italic; color: var(--soil); }
+
+    /* SECTION LABEL */
+    .section { padding: 3rem 2.5rem 1rem; max-width: 1200px; margin: 0 auto; }
+    .section-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(77,39,27,0.4); border-top: 1px solid rgba(77,39,27,0.12); padding-top: 1.5rem; margin-bottom: 0; }
+
+    /* LEADERSHIP CARDS (Directors + Leadership tiers) */
+    .leader-grid { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+    .leader-tier { display: grid; grid-template-columns: 1fr 1fr; }
+    .leader-tier + .leader-tier { border-top: 2px solid rgba(77,39,27,0.12); margin-top: 0.5rem; padding-top: 0.5rem; }
+    .leader-card { cursor: pointer; border-top: 1px solid rgba(77,39,27,0.1); padding: 2rem 0; }
+    .leader-card:focus { outline: none; background: rgba(77,39,27,0.05); }
+    .leader-card:hover { background: rgba(77,39,27,0.04); }
+    .leader-card-inner { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; align-items: start; }
+    .leader-photo { width: 200px; aspect-ratio: 1; object-fit: cover; object-position: top; display: block; filter: grayscale(15%); transition: filter 0.2s; }
+    .leader-info { padding-top: 0.25rem; }
+    .leader-name { font-family: Georgia, serif; font-size: 1.1rem; font-style: italic; color: var(--soil); margin-bottom: 0.3rem; }
+    .leader-role { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(77,39,27,0.5); margin-bottom: 0.75rem; line-height: 1.4; }
+    .leader-bio-preview { font-size: 0.85rem; line-height: 1.6; color: rgba(77,39,27,0.7); font-style: italic; }
+    .leader-plus { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(77,39,27,0.45); margin-top: 1rem; display: block; transition: color 0.2s; }
+    .leader-card:hover .leader-plus { color: var(--soil); }
+
+
+    /* MEMBER GRID */
+    .members-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem 3rem; }
+    .members-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem 1rem; margin-top: 1.5rem; }
+    .member-card { cursor: pointer; position: relative; }
+    .member-card:focus { outline: none; }
+    .member-card:focus .member-photo, .member-card:active .member-photo { filter: grayscale(0%); opacity: 0.85; }
+    .member-photo { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; display: block; filter: grayscale(15%); transition: filter 0.2s; }
+    .member-card:hover .member-photo { filter: grayscale(0%); }
+    .member-info { padding: 0.6rem 0 0; }
+    .person-name { font-family: Georgia, serif; font-size: 0.9rem; font-style: italic; color: var(--soil); margin-bottom: 0.15rem; }
+    .person-title { font-family: 'Helvetica Neue', sans-serif; font-size: 0.62rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(77,39,27,0.5); line-height: 1.4; }
+    .member-plus { font-family: 'Helvetica Neue', sans-serif; font-size: 0.85rem; color: rgba(77,39,27,0.3); margin-top: 0.3rem; display: block; transition: transform 0.2s, color 0.2s; }
+    .member-card:hover .member-plus { color: var(--soil); }
+    .member-card.open .member-plus { transform: rotate(45deg); color: var(--soil); }
+
+    /* MEMBER MODAL */
+    .modal-backdrop { position: fixed; inset: 0; z-index: 500; background: rgba(30,12,6,0.55); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--eggshell-bg); max-width: 640px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 2.5rem; position: relative; box-shadow: 0 20px 60px rgba(30,12,6,0.35); }
+    .modal-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; color: rgba(77,39,27,0.4); cursor: pointer; line-height: 1; transition: color 0.2s; }
+    .modal-close:hover { color: var(--soil); }
+    .modal-inner { }
+    .modal-name { font-family: Georgia, serif; font-size: 1.3rem; font-style: italic; color: var(--soil); margin-bottom: 0.3rem; }
+    .modal-title { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(77,39,27,0.5); margin-bottom: 1.25rem; }
+    .modal-bio { font-size: 0.92rem; line-height: 1.8; color: rgba(77,39,27,0.85); white-space: pre-line; }
+
+    /* FOOTER */
+    .footer { background: var(--soil); padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
+    .footer-left { display: flex; flex-direction: column; gap: 0.45rem; align-items: flex-start; }
+    .footer-logo { height: 16px; width: auto; align-self: flex-start; opacity: 0.9; margin-bottom: 0.1rem; }
+    .footer-left span { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,246,212,0.75); }
+    .footer-right { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; }
+    .footer-copy { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,246,212,0.75); }
+
+    @media (max-width: 960px) {
+      .leader-card-inner { grid-template-columns: 160px 1fr; }
+      .leader-photo { width: 160px; }
+      .members-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .nav { padding: 1rem 1.5rem; }
+      .nav-logo { height: 22px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 6rem 1.5rem 2rem; }
+      .section { padding: 2rem 1.5rem 0.5rem; }
+      .leader-grid { padding: 0 1.5rem; }
+      .leader-tier { grid-template-columns: 1fr; }
+      .members-wrap { padding: 0 1.5rem 2rem; }
+      .members-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.5rem; }
+      .footer-right { align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .leader-card-inner { grid-template-columns: 1fr; }
+      .leader-photo { width: 100%; aspect-ratio: 3/2; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav class="nav" aria-label="Main navigation">
+  <a href="index.html">
+    <img class="nav-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-SOIL.png" alt="The Bike Shop" />
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="what-we-do.html">What we do</a></li>
+      <li><span class="nav-pipe">|</span></li>
+      <li><a href="people.html" class="active">People</a></li>
+      <li><span class="nav-pipe">|</span></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="dropdown" id="dropdown">
+  <a href="what-we-do.html">What we do</a>
+  <a href="people.html" class="active">People</a>
+  <a href="projects.html">Projects</a>
+</div>
+
+<main id="main">
+
+  <div class="hero">
+    <p class="hero-label">People</p>
+    <h1>The Lab</h1>
+  </div>
+
+  <!-- LEADERSHIP SECTION (Directors + Leadership all in one section) -->
+  <div class="section">
+    <p class="section-label">Leadership</p>
+  </div>
+
+  <div class="leader-grid" id="leader-grid">
+
+    <!-- Directors tier: Jens, Sendhil, Bec -->
+    <div class="leader-tier">
+
+    <div class="leader-card" role="button" tabindex="0" onclick="openLeaderModal(0)" data-leader-idx="0">
+      <div class="leader-card-inner">
+        <img class="leader-photo" src="https://sites.mit.edu/thebikeshop/files/2025/08/ludwig_1.jpg" alt="Jens Ludwig" />
+        <div class="leader-info">
+          <div class="leader-name">Jens Ludwig</div>
+          <div class="leader-role">Co-Founder + Academic Director; Professor, University of Chicago Harris School of Public Policy</div>
+          <span class="leader-plus">+ Read more</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="leader-card" role="button" tabindex="0" onclick="openLeaderModal(1)" data-leader-idx="1">
+      <div class="leader-card-inner">
+        <img class="leader-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/sendhil-mullainathan.jpg" alt="Sendhil Mullainathan" />
+        <div class="leader-info">
+          <div class="leader-name">Sendhil Mullainathan</div>
+          <div class="leader-role">Co-Founder + Academic Director; Professor, MIT with dual appointments in both Economics and Computer Science</div>
+          <span class="leader-plus">+ Read more</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="leader-card" role="button" tabindex="0" onclick="openLeaderModal(2)" data-leader-idx="2">
+      <div class="leader-card-inner">
+        <img class="leader-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/bec-weeks.jpg" alt="Bec Weeks" />
+        <div class="leader-info">
+          <div class="leader-name">Bec Weeks</div>
+          <div class="leader-role">Executive Director</div>
+          <span class="leader-plus">+ Read more</span>
+          </div>
+      </div>
+    </div>
+
+    </div><!-- /leader-tier directors -->
+
+    <!-- Leadership tier: Ashesh, Daniel, Laura -->
+    <div class="leader-tier">
+
+    <div class="leader-card" role="button" tabindex="0" onclick="openLeaderModal(3)" data-leader-idx="3">
+      <div class="leader-card-inner">
+        <img class="leader-photo" src="https://sites.mit.edu/thebikeshop/files/2025/08/ashesh-rambachan09.jpg" alt="Ashesh Rambachan" />
+        <div class="leader-info">
+          <div class="leader-name">Ashesh Rambachan</div>
+          <div class="leader-role">Assistant Professor of Economics at MIT</div>
+          <span class="leader-plus">+ Read more</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="leader-card" role="button" tabindex="0" onclick="openLeaderModal(4)" data-leader-idx="4">
+      <div class="leader-card-inner">
+        <img class="leader-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/placeholder-headshot.jpg" alt="Daniel Tu-Hoa" />
+        <div class="leader-info">
+          <div class="leader-name">Daniel Tu-Hoa</div>
+          <div class="leader-role">Head of Product Strategy + Development</div>
+          <span class="leader-plus">+ Read more</span>
+          </div>
+      </div>
+    </div>
+
+    <div class="leader-card" role="button" tabindex="0" onclick="openLeaderModal(5)" data-leader-idx="5">
+      <div class="leader-card-inner">
+        <img class="leader-photo" src="https://sites.mit.edu/thebikeshop/files/2025/08/Laura-01.jpg" alt="Laura Blattner" />
+        <div class="leader-info">
+          <div class="leader-name">Laura Blattner</div>
+          <div class="leader-role">Head of Impact</div>
+          <span class="leader-plus">+ Read more</span>
+          </div>
+      </div>
+    </div>
+
+    </div><!-- /leader-tier leadership -->
+
+  </div><!-- /leader-grid -->
+
+  <!-- CREW -->
+  <div class="section">
+    <p class="section-label">The Bike Shop Crew</p>
+  </div>
+
+  <div class="members-wrap">
+    <div class="members-grid" id="members-grid">
+      <div class="member-card" role="button" tabindex="0" data-idx="0" onclick="openModal(0)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/placeholder-headshot.jpg" alt="Nicolena Antifonario-Capello" /><div class="member-info"><div class="person-name">Nicolena Antifonario-Capello</div><div class="person-title">Senior Research Support Associate</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="1" onclick="openModal(1)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/04/sarah-g-bentley.jpg" alt="Sarah G. Bentley" /><div class="member-info"><div class="person-name">Sarah G. Bentley</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="2" onclick="openModal(2)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/placeholder-headshot.jpg" alt="James Braza" /><div class="member-info"><div class="person-name">James Braza</div><div class="person-title">ML Engineer · Incoming PhD Student in EECS</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="3" onclick="openModal(3)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/peter-g-chang.jpg" alt="Peter G. Chang" /><div class="member-info"><div class="person-name">Peter G. Chang</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="4" onclick="openModal(4)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/justin-chen.jpg" alt="Justin Chen" /><div class="member-info"><div class="person-name">Justin Chen</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="5" onclick="openModal(5)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/oeindrila-dube.jpg" alt="Oeindrila Dube" /><div class="member-info"><div class="person-name">Oeindrila Dube</div><div class="person-title">Professor · University of Chicago</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="6" onclick="openModal(6)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/placeholder-headshot.jpg" alt="Haya Alsharif" /><div class="member-info"><div class="person-name">Haya Alsharif</div><div class="person-title">Predoctoral Researcher</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="7" onclick="openModal(7)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/chenxi-jiang.jpg" alt="Chenxi Jiang" /><div class="member-info"><div class="person-name">Chenxi Jiang</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="8" onclick="openModal(8)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/jimmy-lin2.jpg" alt="Jimmy Lin" /><div class="member-info"><div class="person-name">Jimmy Lin</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="9" onclick="openModal(9)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/04/steven-ma.jpg" alt="Steven Ma" /><div class="member-info"><div class="person-name">Steven Ma</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="10" onclick="openModal(10)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/marina-mancoridis.jpg" alt="Marina Mancoridis" /><div class="member-info"><div class="person-name">Marina Mancoridis</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="11" onclick="openModal(11)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/juan-c-perdomo.jpg" alt="Juan C. Perdomo" /><div class="member-info"><div class="person-name">Juan C. Perdomo</div><div class="person-title">Postdoctoral Fellow</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="12" onclick="openModal(12)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/sophia-pink.jpg" alt="Sophia Pink" /><div class="member-info"><div class="person-name">Sophia Pink</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="13" onclick="openModal(13)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/lindsey-raymond.jpg" alt="Lindsey Raymond" /><div class="member-info"><div class="person-name">Lindsey Raymond</div><div class="person-title">Postdoctoral Fellow</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="14" onclick="openModal(14)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/06/alana-renda.jpg" alt="Alana Renda" /><div class="member-info"><div class="person-name">Alana Renda</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="15" onclick="openModal(15)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/maricarmen-rodriguez.jpg" alt="Maricarmen Rodriguez" /><div class="member-info"><div class="person-name">Maricarmen Rodriguez</div><div class="person-title">Administrative Assistant</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="16" onclick="openModal(16)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/charlotte-siegmann.jpg" alt="Charlotte Siegmann" /><div class="member-info"><div class="person-name">Charlotte Siegmann</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="17" onclick="openModal(17)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/04/cassidy-shubatt.jpg" alt="Cassidy Shubatt" /><div class="member-info"><div class="person-name">Cassidy Shubatt</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="18" onclick="openModal(18)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/06/keyon-vafa.jpg" alt="Keyon Vafa" /><div class="member-info"><div class="person-name">Keyon Vafa</div><div class="person-title">Postdoctoral Fellow</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="19" onclick="openModal(19)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/zachary-wojtowicz.jpg" alt="Zachary Wojtowicz" /><div class="member-info"><div class="person-name">Zachary Wojtowicz</div><div class="person-title">Postdoctoral Fellow</div></div><span class="member-plus">+</span></div>
+      <div class="member-card" role="button" tabindex="0" data-idx="20" onclick="openModal(20)"><img class="member-photo" src="https://sites.mit.edu/thebikeshop/files/2026/03/ben-workman.jpg" alt="Ben Workman" /><div class="member-info"><div class="person-name">Ben Workman</div><div class="person-title">PhD Student</div></div><span class="member-plus">+</span></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-inner" id="modal-inner"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-left">
+    <img class="footer-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-EGGSHELL.png" alt="The Bike Shop" />
+    <span>The Bike Shop</span>
+    <span>Massachusetts Institute of Technology &amp; University of Chicago</span>
+    <!-- <span><a href="mailto:contact@thebikeshop.io" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">contact@thebikeshop.io</a></span> -->
+  </div>
+  <div class="footer-right">
+    <span class="footer-copy">© 2026 The Bike Shop</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+
+  var members = [{"name": "Nicolena Antifonario-Capello", "title": "Senior Research Support Associate", "bio": "More to follow."}, {"name": "Sarah G. Bentley", "title": "PhD Student", "bio": "Sarah Bentley is a first-year EECS PhD student at MIT whose research sits at the intersection of artificial intelligence, formal computing, and human decision-making. Sarah holds a Master of Engineering in Computer Science and dual Bachelor\u2019s degrees in Mathematics and AI & Decision Making from MIT. As an undergraduate, she conducted research in space logistics at MIT\u2019s Engineering Systems Laboratory and completed two internships with Blue Origin, where she built flight-critical trajectory software and cargo-packing optimization algorithms. She has co-authored publications at NeurIPS 2025, where she presented work on measuring the steerability of generative models, and at two aerospace conferences. She is a recipient of the Ida M. Green Fellowship, recognizing exceptional achievement and research potential among women in graduate engineering at MIT."}, {"name": "James Braza", "title": "ML Engineer \u00b7 Incoming PhD Student in EECS", "bio": "More to follow."}, {"name": "Peter G. Chang", "title": "PhD Student", "bio": "Peter is a second-year EECS PhD student at MIT, developing AI tools for scientific discovery and understanding. He is a recipient of the NSF CSGrad4US Graduate Research Fellowship. He has co-authored publications at ICML 2025 and NeurIPS 2024, and co-organized the ICML 2025 Workshop on Assessing World Models. Peter graduated from Harvard University magna cum laude with highest honors, earning an AB in Physics and Mathematics and an SM in Computer Science, and was inducted into Phi Beta Kappa (\u201cSenior 48\u201d)."}, {"name": "Justin Chen", "title": "PhD Student", "bio": "Justin is a final-year PhD student in the Theory of Computation Group in MIT CSAIL. His research focuses on incorporating principles of algorithm design with unreliable machine learning systems. He has published at top-tier conferences in machine learning and theoretical computer science on topics including learning-augmented algorithms, LLM evaluation, and differential privacy. His work has been recognized with an Oral award at NeurIPS and Spotlight awards at NeurIPS (3x) and ICLR. His research has been featured by The Wall Street Journal, Quanta Magazine, and Google Research. He is the recipient of the NSF GRFP Fellowship and MathWorks Engineering Fellowship. He graduated with a B.S. with Honors in Computer Science from Stanford University and a M.S. in Electrical Engineering and Computer Science from MIT."}, {"name": "Oeindrila Dube", "title": "Professor \u00b7 University of Chicago", "bio": "Oeindrila Dube studies poverty, violence and crime in countries around the world. One strand of her research analyzes how economic shocks shape conflict dynamics. Another strand examines how cognitive factors give rise to violence."}, {"name": "Haya Alsharif", "title": "Predoctoral Researcher", "bio": "Haya is a predoctoral researcher at The Bike Shop, where she works at the intersection of economics, machine learning, and computational social science. Her work spans data construction and analysis, research codebase management, technical communication, and the translation of empirical results into clear outputs for collaborative research teams. She is interested in technology, social impact, and organizational systems, and enjoys contributing to projects that make institutions more thoughtful, effective, and evidence-driven. Haya holds a Master\u2019s degree in Statistics from UCLA, where she developed a strong foundation in statistical modeling, machine learning, and applied data analysis."}, {"name": "Chenxi Jiang", "title": "PhD Student", "bio": "Chenxi is a second-year PhD student in Economics at MIT. Her research combines insights from behavioral economics and machine learning to study decision-making in real-world contexts. She is a recipient of the Presidential Graduate Fellowship and the MIT Economics Department Fellowship. She has co-authored research on information extraction from non-standard data sources and on preference elicitation in survey methods. Chenxi received her B.A. from the University of California, Berkeley, where she studied Economics, Psychology, and Data Science and was inducted into Phi Beta Kappa. At Berkeley, she served as Editor-in-Chief of the Berkeley Undergraduate Journal and worked as a student instructor for courses in the Department of Statistics. She graduated with Highest Distinction in General Scholarship and Highest Honors in Economics."}, {"name": "Jimmy Lin", "title": "PhD Student", "bio": "Jimmy is a joint PhD candidate in Economics and Statistics at MIT, where his research combines tools from machine learning, behavioral economics, and statistics. His PhD work was selected for the NSF Graduate Research Fellowship, the Paul and Daisy Soros Fellowship for New Americans, the MIT Economics Department Fellowship, and the George and Obie Shultz Fund Grant. Jimmy graduated with honors from Harvard College in Mathematics and Computer Science. At Harvard, Jimmy was the Editor-in-Chief of the Harvard Economics Review and a competing member of Harvard\u2019s debate team, the top college debate team in the nation. His economics research earned him recognition as an Economic Design Fellow at the Harvard Center of Mathematical Sciences and Applications, and he received the Thomas Hoopes Prize for Outstanding Thesis Research for his work on changing labor supply dynamics during the onset of the Covid pandemic. Outside of research, Jimmy has always believed in the value of teaching and scientific communication: he was a competitive programming instructor and coauthored a textbook on microeconomic theory. He helped teach courses in the Economics, Computer Science, and Mathematics departments at Harvard, where he earned the Derek Bok Center Distinction in Teaching."}, {"name": "Steven Ma", "title": "PhD Student", "bio": "Steven is a third-year PhD student in economics at Harvard University and a visiting student at MIT\u2019s Laboratory for Information and Decision Systems (LIDS). His research interests are in behavioral economics, machine learning, and finance, with a focus on using AI to develop new methods for studying behavior. He graduated summa cum laude from Yale with a B.A. in mathematics, where he was a junior inductee in Phi Beta Kappa, Yale\u2019s top scorer in the Putnam Competition, and a quantitative trading intern at Optiver. He has also written papers on algorithmic game theory and the cognitive foundations of decision-making."}, {"name": "Marina Mancoridis", "title": "PhD Student", "bio": "Marina is a second-year CS PhD student at MIT. Her research focuses on artificial intelligence, behavioral science, and decision-making. As a first-year PhD student, she has co-authored a publication at ICML 2025 (\u201cPotemkin Understanding in Large Language Models.\u201d) She graduated summa cum laude from Princeton University. Her senior thesis\u2014on developing a formal model of the scientific process\u2014won the Calvin Dodd MacCracken award for the most inventive and technically accomplished senior thesis in Princeton University\u2019s School of Engineering and Applied Sciences (from more than 500 theses), as well as Outstanding Senior Thesis prize for the best senior thesis in the department (from around 200 theses). She also won the Computer Science Department Outstanding Independent Work Award, for the best junior-year research paper in the department (from around 200 papers). She has worked as a deep learning fellow at the Memorial Sloan Kettering Hospital, a research assistant at Princeton University\u2019s Computational Cognitive Science Lab, and a global markets summer analyst at UBS. She was a founding engineer in the YC-backed start-up called Zage Financial Services, spending a year developing an alternative payment method to credit cards."}, {"name": "Juan C. Perdomo", "title": "Postdoctoral Fellow", "bio": "Juan is a postdoctoral fellow at MIT and an incoming assistant professor at NYU, jointly appointed between the departments of computer science and data science. He holds a PhD in EECS from UC Berkeley on machine learning in society, advised by Peter Bartlett and Moritz Hardt; he was awarded the NSF GFRP Fellowship. Juan\u2019s PhD thesis introduced a new learning theoretic framework, performative prediction which formalizes how predictions in the social world trigger actions that actively shape the data we see. This dynamic feedback loop between learning algorithms and society was previously neglected in the ML community. His work sparked a new area of research within ML theory with several new papers extending this line of work now submitted to top ML conferences like Neurips and ICML each year. His recent ICML 2025 submission, \u201cThe Value of Prediction in Identifying the Worst-Off,\u201d earned him an ICML Outstanding Paper Award. He graduated magna cum laude from Harvard College with a concentration in computer science and mathematics and was awarded the Detur Book Prize and the Hoopes prize for best theses."}, {"name": "Sophia Pink", "title": "PhD Student", "bio": "Sophia is a fourth-year PhD student at the Wharton School at the University of Pennsylvania. She is a behavioral scientist who studies decision-making in organizations. Her research focuses on: (a) understanding how people make decisions, and (b) designing tools and interventions that promote wiser choices. She conducts field experiments to examine behavior in organizations, and lab experiments to study psychological mechanisms. Sophia is an author of seven publications in top academic journals, including Science, Proceedings of the National Academy of Sciences, Nature Human Behaviour, and Organization Science, and her papers have received over 800 citations. Sophia graduated with an M.S. and B.S. with honors and distinction from Stanford University, where she was elected to Phi Beta Kappa and Tau Beta Pi engineering honors society."}, {"name": "Lindsey Raymond", "title": "Postdoctoral Fellow", "bio": "Lindsey is an incoming Assistant Professor at MIT with a joint appointment in the Department of Economics, the Department of Electrical Engineering and Computer Science (EECS), and the Schwarzman College of Computing. She is currently a postdoctoral researcher at Microsoft Research. Her research examines how artificial intelligence shapes labor markets and market competition, and how economic insights can inform algorithm design. Her work has appeared in leading economics journals, including The Quarterly Journal of Economics and The Review of Economic Studies. She is a Schmidt Sciences AI2050 Early Career Fellow and a recipient of the Stripe Economics Fellowship. From 2021\u20132022, she served at the White House Council of Economic Advisers, where she helped lead a joint U.S.\u2013EU report on artificial intelligence. She co-organizes the Machine Learning in Economics Summer Institute. She received her PhD from MIT and her BA from Yale."}, {"name": "Alana Renda", "title": "PhD Student", "bio": "Alana is a PhD student in computer science at MIT, where she works with both The Bike Shop and the Language and Intelligence group on using AI to support human decision-making across domains ranging from scientific discovery to finance. She previously took leave from her PhD to found and serve as CEO of Readyset, a data infrastructure company, raising $30M from investors including Index Ventures, Amplify Partners, and Sequoia Capital. Her earlier research focused on efficient machine learning, including low-precision arithmetic and variance reduction for stochastic gradient descent, and on synthetic data for training NLP systems. As a graduate student she was supported by a Jacobs Presidential Fellowship."}, {"name": "Maricarmen Rodriguez", "title": "Administrative Assistant", "bio": "Maricarmen serves as the Administrative Assistant for The Bike Shop @ MIT, where she supports the lab\u2019s PhD students and postdoctoral researchers in advancing their work. She manages core operational functions with internal and external partners ensuring the smooth execution of the lab\u2019s operations in support of its research mission. She is also affiliated with the MIT Laboratory for Information and Decision Systems (LIDS).<br><br>Maricarmen is currently pursuing an MS in Computer Science at Northeastern University. Prior to transitioning into technology, she spent four years working in the legal field, supporting legal initiatives and managing federal grant programs, where she developed a strong interest in how complex legal, institutional, and computational systems shape outcomes at scale. She previously studied Linguistics and Political Science, grounding her interest in technology within broader questions of governance and society."}, {"name": "Charlotte Siegmann", "title": "PhD Student", "bio": "Charlotte is a third-year PhD student in Economics at MIT. She has been a Scholar of the German Academic Scholarship Foundation throughout her undergraduate and graduate studies. Prior to her PhD, she worked on and wrote about AI and technology policy in Germany and Europe, worked as an economics predoc at Oxford University, interned for Evelyne Gebhardt, a Vice-President of the European Parliament, and contracted for OpenAI."}, {"name": "Cassidy Shubatt", "title": "PhD Student", "bio": "Cassidy is a fifth-year Ph.D. student in Economics at Harvard. Her research uses laboratory experiments to formulate and test theories of economic behavior, with a particular focus on how algorithms can be used to improve experimental design and extract insights from experimental data. Her work has been supported by the Michael S. Chae Macroeconomic Policy Fund as well as the John and Kiendl Gordon Economics Support Fund. Cassidy serves as a referee for many of the leading Economics journals, including Econometrica, the American Economic Review, and the Quarterly Journal of Economics. Prior to starting her Ph.D., Cassidy spent two years as a research fellow in the Center for Applied AI at the University of Chicago. Cassidy graduated summa cum laude from the University of Iowa, where she was a presidential scholar and a two-time recipient of the Nordquist Economics Scholarship."}, {"name": "Keyon Vafa", "title": "Postdoctoral Fellow", "bio": "Keyon is a postdoctoral fellow at Harvard University. His research focuses on developing AI methods to address economic questions along with using insights from the behavioral sciences to improve AI methods. Keyon completed his PhD in computer science at Columbia University, where he was an NSF GRFP Fellow, a Cheung-Kong Innovation Doctoral Fellow, and the recipient of the Morton B. Friedman Memorial Prize for excellence in engineering (awarded to one graduate at Columbia SEAS each year). During his PhD, he launched and co-organized the ML-NYC speaker series, a monthly seminar series for New York-based AI researchers. He was the lead organizer of the NeurIPS 2024 Workshop on Behavioral Machine Learning and the ICML 2025 Workshop on Assessing World Models. His research has been covered by publications including ProPublica, The Atlantic, and The Wall Street Journal."}, {"name": "Zachary Wojtowicz", "title": "Postdoctoral Fellow", "bio": "Zachary is a Postdoctoral Fellow at the Massachusetts Institute of Technology, affiliated with the Laboratory for Information and Decision Systems. His research sits at the intersection of economics, psychology, and computer science, combining behavioral theory with computational methods to study how people learn, reason, and make decisions in complex information environments. He has published research in venues including the Journal of Economic Literature, Cognitive Science, Trends in Cognitive Sciences, and leading artificial intelligence conferences such as AAAI and FAccT. He earned a PhD in Behavioral Economics and an MS in Machine Learning from Carnegie Mellon University, where he was supported by a Presidential Fellowship."}, {"name": "Ben Workman", "title": "PhD Student", "bio": "Ben is a first-year economics PhD student at MIT interested in behavioral and labor economics, as well as the applications of machine learning to economics. He graduated magna cum laude with highest honors in economics from Harvard College, where he received the Thomas T. Hoopes Prize for excellence in undergraduate research."}];
+
+  var leaders = [{"name": "Jens Ludwig", "role": "Co-Founder + Academic Director; Professor, University of Chicago Harris School of Public Policy", "bio": "Jens is the Co-Founder and Academic Director of The Bike Shop. He is the Edwin A. and Betty L. Bergman Distinguished Service Professor at the Harris School of Public Policy at the University of Chicago. He founded the Crime Lab and the Education Lab\u2014which he now directs and codirects respectively\u2014to turn insights from economics, specifically from behavioral and data science, into social change to solve real world problems. Examples of real-world impact include partnering with the Mayor\u2019s Office in New York City to help build and implement a new pretrial risk tool as part of the city\u2019s goal to close Riker\u2019s Island, and working with the Chicago Police Department to implement data-driven management changes that helped substantially reduce gun violence without increasing arrests. He recently authored \u201cUnforgiving Places: The Unexpected Origins of American Gun Violence,\u201d as discussed by Malcolm Gladwell in The New Yorker."}, {"name": "Sendhil Mullainathan", "role": "Co-Founder + Academic Director; Professor, MIT with dual appointments in both Economics and Computer Science", "bio": "Sendhil is the Co-Founder and Academic Director of The Bike Shop. He is the Peter de Florez Professor at MIT with dual appointments in the departments of Economics and Electrical Engineering and Computer Science, and a principal investigator at the MIT Laboratory for Information and Decision Systems (LIDS). He is renowned for his frontier-leading work at the intersection of economics and computer science as well as for the vast span of his work across domains including health care, development, labor and workforce. He has previously launched successful non-profits and research institutes such as J-PAL and ideas42, co-founded a machine learning startup (Dandelion), and co-authored \u201cScarcity: Why Having Too Little Means So Much.\u201d He is a recipient of the MacArthur \u201cgenius\u201d Award, a winner of the Infosys Prize, has been designated a \u201cYoung Global Leader\u201d by the World Economic Forum, labeled a \u201cTop 100 Thinker\u201d by Foreign Policy Magazine, and named to the \u201cSmart List: 50 people who will change the world\u201d by Wired Magazine (UK)."}, {"name": "Bec Weeks", "role": "Executive Director", "bio": "Bec is the Executive Director of The Bike Shop. She brings a decade of experience leading at the intersection of behavioral science, technology, and public policy. Most recently, she led a University of Chicago initiative translating metacognitive skill-building into workforce readiness training. Previously, she co-founded a behavioral science technology startup, served as a Senior Advisor in the Behavioural Economics Team of the Australian Government (BETA) overseeing randomized controlled trials across health, education, and employment policy, and was a management consultant at Bain & Co. She has also held a visiting fellowship at Harvard University focused on applied machine learning research, and has published work in AI and behavioral science. She holds an MBA from Harvard Business School and bachelor\u2019s degrees in both economics and law from the University of Sydney, Australia."}, {"name": "Ashesh Rambachan", "role": "Assistant Professor of Economics at MIT", "bio": "Ashesh is the Silverman (1968) Family Career Development Assistant Professor of Economics at MIT and a principal investigator at the MIT Laboratory for Information and Decision Systems (LIDS). He is recognized as a leading young researcher at the interface of econometrics, machine learning, and public policy. His research has appeared in top economics journals (The Quarterly Journal of Economics; The Review of Economic Studies), leading statistics outlets (Journal of the American Statistical Association), and premier machine-learning conferences (ICML; NeurIPS). He has organized the Machine Learning in Economics Summer Institute, the premier summer workshop for graduate students working at the intersection of economics and machine learning. He earned his PhD in Economics from Harvard University, where he received the David A. Wells Prize for best dissertation and held an NSF Graduate Research Fellowship. He was selected for the Review of Economic Studies European Tour and the China Star Tour\u2014honors reserved for the most promising early-career economists worldwide."}, {"name": "Daniel Tu-Hoa", "role": "Head of Product Strategy + Development", "bio": "More to follow."}, {"name": "Laura Blattner", "role": "Head of Impact", "bio": "Laura is the Head of Impact at The Bike Shop, focusing on translating cutting-edge research in AI and behavioral science into scalable software products designed to drive meaningful, measurable change in the world. Previously, Laura was a product lead at Watershed, a Series C climate tech startup helping enterprises manage emissions, sustainability risk, and ESG compliance. She was previously in academia, as an Assistant Professor of Finance at Stanford University Graduate School of Business, where she founded a data science lab developing responsible machine learning tools for financial services. She holds a PhD in Economics and Political Economy from Harvard University, and an MPhil and BA from the University of Oxford."}];
+
+  window.openModal = function(idx) {
+    var m = members[idx];
+    document.getElementById("modal-inner").innerHTML =
+      "<div class='modal-name'>" + m.name + "</div>" +
+      "<div class='modal-title'>" + m.title + "</div>" +
+      "<div class='modal-bio'>" + m.bio + "</div>";
+    document.getElementById("modal-backdrop").classList.add("open");
+    document.body.style.overflow = "hidden";
+  };
+
+  window.openLeaderModal = function(idx) {
+    var l = leaders[idx];
+    document.getElementById("modal-inner").innerHTML =
+      "<div class='modal-name'>" + l.name + "</div>" +
+      "<div class='modal-title'>" + l.role + "</div>" +
+      "<div class='modal-bio'>" + l.bio + "</div>";
+    document.getElementById("modal-backdrop").classList.add("open");
+    document.body.style.overflow = "hidden";
+  };
+
+  window.closeModal = function(e) {
+    if (e && e.target !== document.getElementById("modal-backdrop")) return;
+    document.getElementById("modal-backdrop").classList.remove("open");
+    document.body.style.overflow = "";
+  };
+
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+      document.getElementById("modal-backdrop").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.classList.contains("member-card")) {
+      e.preventDefault();
+      window.openModal(parseInt(e.target.getAttribute("data-idx")));
+    }
+    if (e.target.classList.contains("leader-card")) {
+      e.preventDefault();
+      window.openLeaderModal(parseInt(e.target.getAttribute("data-leader-idx") || "0"));
+    }
+  });
+
+})();
+
+window.toggleMenu = function() {
+  document.getElementById("hamburger").classList.toggle("open");
+  document.getElementById("dropdown").classList.toggle("open");
+};
+document.addEventListener("click", function(e) {
+  var btn = document.getElementById("hamburger");
+  var drop = document.getElementById("dropdown");
+  if (drop && drop.classList.contains("open") && !drop.contains(e.target) && !btn.contains(e.target)) {
+    btn.classList.remove("open"); drop.classList.remove("open");
+  }
+});
+</script>
+
+</body>
+</html>
