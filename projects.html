@@ -6,6 +6,18 @@
   <title>Projects – The Bike Shop</title>
   <meta name="description" content="A sample of the bicycles for the mind we're building — from education to criminal justice to chemistry." />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="canonical" href="https://thebikeshop.io/projects.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Projects – The Bike Shop" />
+  <meta property="og:description" content="A sample of the bicycles for the mind we're building — from education to criminal justice to chemistry." />
+  <meta property="og:url" content="https://thebikeshop.io/projects.html" />
+  <meta property="og:image" content="https://thebikeshop.io/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Projects – The Bike Shop" />
+  <meta name="twitter:description" content="A sample of the bicycles for the mind we're building — from education to criminal justice to chemistry." />
+  <meta name="twitter:image" content="https://thebikeshop.io/og-image.jpg" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -15,16 +27,17 @@
       "description": "A sample of the bicycles for the mind we're building — from education to criminal justice to chemistry.",
       "isPartOf": {
       "@type": "ResearchOrganization",
+      "@id": "https://thebikeshop.io/#organization",
       "name": "The Bike Shop",
       "url": "https://thebikeshop.io"
     },
       "mentions": [
-        { "@type": "ResearchProject", "name": "Education Foundation Model" },
-        { "@type": "ResearchProject", "name": "Theory-Scaffolded Learning" },
-        { "@type": "ResearchProject", "name": "Pre-Trial Bail Decision-Making" },
-        { "@type": "ResearchProject", "name": "Learning from the Best: What Top Investigators See That Others Miss" },
-        { "@type": "ResearchProject", "name": "From Next-Token Prediction to Automata Induction" },
-        { "@type": "ResearchProject", "name": "Situational Decision-Making" }
+        { "@type": "ResearchProject", "@id": "https://thebikeshop.io/projects.html#education-foundation-model", "name": "Education Foundation Model", "url": "https://thebikeshop.io/projects.html#education-foundation-model", "description": "A model trained on novel student thought processes that pinpoints the specific source of a student's confusion, turning assessment into a rich diagnostic map rather than a single score, so teachers can move past trial-and-error in every pedagogical decision." },
+        { "@type": "ResearchProject", "@id": "https://thebikeshop.io/projects.html#theory-scaffolded-learning", "name": "Theory-Scaffolded Learning: Embedding Chemistry Knowledge into Predictive Models", "url": "https://thebikeshop.io/projects.html#theory-scaffolded-learning", "description": "A theory-scaffolded model for chemistry that combines the generalization power of scientific theory, such as electrostatics and orbital resonance, with the flexibility of neural networks trained on experimental reaction data." },
+        { "@type": "ResearchProject", "@id": "https://thebikeshop.io/projects.html#pre-trial-bail-decision-making", "name": "Pre-Trial Bail Decision-Making", "url": "https://thebikeshop.io/projects.html#pre-trial-bail-decision-making", "description": "An algorithmic decision aid built with the University of Chicago Crime Lab and the New York City Mayor's Office of Criminal Justice that helps judges prioritize pre-trial detention for truly high-risk defendants, used hundreds of thousands of times since 2019." },
+        { "@type": "ResearchProject", "@id": "https://thebikeshop.io/projects.html#learning-from-the-best", "name": "Learning from the Best: What Top Investigators See That Others Miss", "url": "https://thebikeshop.io/projects.html#learning-from-the-best", "description": "Using machine learning to identify the case characteristics that high-performing child protective services investigators consistently notice, creating a blueprint for coaching that scales the judgment of top performers across the system." },
+        { "@type": "ResearchProject", "@id": "https://thebikeshop.io/projects.html#automata-induction", "name": "From Next-Token Prediction to Automata Induction", "url": "https://thebikeshop.io/projects.html#automata-induction", "description": "An econometric framework that distills black-box sequence predictors, including transformers, into compact, interpretable finite automata, giving researchers and policymakers a principled way to extract and act on insights from sequence data." },
+        { "@type": "ResearchProject", "@id": "https://thebikeshop.io/projects.html#situational-decision-making", "name": "Situational Decision-Making", "url": "https://thebikeshop.io/projects.html#situational-decision-making", "description": "Led by Oeindrila Dube, this project combines AI with insights from behavioral science to help police officers navigate the high-stakes decisions they face every shift." }
       ]
     }
   </script>
@@ -63,16 +76,17 @@
 
     /* GRID */
     .grid-section { padding: 0 2.5rem 2rem; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
 
     /* CARDS */
     .card { background: var(--soil); color: var(--eggshell); padding: 2.5rem; cursor: pointer; position: relative; border: 1px solid rgba(255,246,212,0.06); transition: background 0.25s; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
     .card:focus { outline: 2px solid rgba(255,246,212,0.6); outline-offset: 2px; }
     .card:hover, .card.open { background: #5e3122; }
     .card-num { font-family: 'Helvetica Neue', sans-serif; font-size: 0.6rem; letter-spacing: 0.12em; color: rgba(255,246,212,0.35); margin-bottom: 1rem; display: block; }
-    .card-title { font-family: Georgia, serif; font-style: italic; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.35; flex: 1; }
+    .card-title { font-family: Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.35; flex: 1; }
     .card-hint { font-family: 'Helvetica Neue', sans-serif; font-size: 1.1rem; color: rgba(255,246,212,0.35); align-self: flex-end; margin-top: 1.5rem; transition: transform 0.2s, color 0.2s; }
     .card:hover .card-hint, .card.open .card-hint { color: var(--eggshell); transform: rotate(45deg); }
+    .sr-summary { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     /* EXPAND ROW */
     .expand-row { grid-column: 1 / -1; max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1); background: var(--eggshell); cursor: pointer; }
@@ -150,39 +164,45 @@
   <div class="grid-section">
     <div class="grid" id="project-grid">
 
-      <div class="card" role="button" tabindex="0" data-idx="0" onclick="toggleProject(this)">
+      <div class="card" role="button" tabindex="0" data-idx="0" id="education-foundation-model" onclick="toggleProject(this)">
         <span class="card-num">01</span>
-        <div class="card-title">Education Foundation Model</div>
+        <h3 class="card-title">Education Foundation Model</h3>
         <span class="card-hint">+</span>
+        <p class="sr-summary">A model trained on novel student thought processes that pinpoints the specific source of a student's confusion, turning assessment into a rich diagnostic map so teachers can move past trial-and-error in every pedagogical decision.</p>
       </div>
-      <div class="card" role="button" tabindex="0" data-idx="1" onclick="toggleProject(this)">
+      <div class="card" role="button" tabindex="0" data-idx="1" id="theory-scaffolded-learning" onclick="toggleProject(this)">
         <span class="card-num">02</span>
-        <div class="card-title">Theory-Scaffolded Learning</div>
+        <h3 class="card-title">Theory-Scaffolded Learning</h3>
         <span class="card-hint">+</span>
+        <p class="sr-summary">Theory-Scaffolded Learning: Embedding Chemistry Knowledge into Predictive Models. A theory-scaffolded model for chemistry that combines the generalization power of scientific theory with the flexibility of neural networks trained on experimental reaction data.</p>
       </div>
       <div class="expand-row" id="er-A"><div class="expand-inner" id="er-A-inner"></div></div>
 
-      <div class="card" role="button" tabindex="0" data-idx="2" onclick="toggleProject(this)">
+      <div class="card" role="button" tabindex="0" data-idx="2" id="pre-trial-bail-decision-making" onclick="toggleProject(this)">
         <span class="card-num">03</span>
-        <div class="card-title">Pre-Trial Bail Decision-Making</div>
+        <h3 class="card-title">Pre-Trial Bail Decision-Making</h3>
         <span class="card-hint">+</span>
+        <p class="sr-summary">An algorithmic decision aid built with the University of Chicago Crime Lab and the New York City Mayor's Office of Criminal Justice that helps judges prioritize pre-trial detention for truly high-risk defendants, used hundreds of thousands of times since 2019.</p>
       </div>
-      <div class="card" role="button" tabindex="0" data-idx="3" onclick="toggleProject(this)">
+      <div class="card" role="button" tabindex="0" data-idx="3" id="learning-from-the-best" onclick="toggleProject(this)">
         <span class="card-num">04</span>
-        <div class="card-title">Learning from the Best: What Top Investigators See That Others Miss</div>
+        <h3 class="card-title">Learning from the Best: What Top Investigators See That Others Miss</h3>
         <span class="card-hint">+</span>
+        <p class="sr-summary">Using machine learning to identify the case characteristics that high-performing child protective services investigators consistently notice, creating a blueprint for coaching that scales the judgment of top performers across the system.</p>
       </div>
       <div class="expand-row" id="er-B"><div class="expand-inner" id="er-B-inner"></div></div>
 
-      <div class="card" role="button" tabindex="0" data-idx="4" onclick="toggleProject(this)">
+      <div class="card" role="button" tabindex="0" data-idx="4" id="automata-induction" onclick="toggleProject(this)">
         <span class="card-num">05</span>
-        <div class="card-title">From Next-Token Prediction to Automata Induction</div>
+        <h3 class="card-title">From Next-Token Prediction to Automata Induction</h3>
         <span class="card-hint">+</span>
+        <p class="sr-summary">An econometric framework that distills black-box sequence predictors, including transformers, into compact, interpretable finite automata, giving researchers and policymakers a principled way to extract and act on insights from sequence data.</p>
       </div>
-      <div class="card" role="button" tabindex="0" data-idx="5" onclick="toggleProject(this)">
+      <div class="card" role="button" tabindex="0" data-idx="5" id="situational-decision-making" onclick="toggleProject(this)">
         <span class="card-num">06</span>
-        <div class="card-title">Situational Decision-Making</div>
+        <h3 class="card-title">Situational Decision-Making</h3>
         <span class="card-hint">+</span>
+        <p class="sr-summary">Led by Oeindrila Dube, this project combines AI with insights from behavioral science to help police officers navigate the high-stakes decisions they face every shift.</p>
       </div>
       <div class="expand-row" id="er-C"><div class="expand-inner" id="er-C-inner"></div></div>
 
