@@ -76,7 +76,7 @@
 
     /* GRID */
     .grid-section { padding: 0 2.5rem 2rem; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.85rem; row-gap: 0.425rem; }
 
     /* CARDS */
     .card { background: var(--soil); color: var(--eggshell); padding: 2.5rem; cursor: pointer; position: relative; border: 1px solid rgba(255,246,212,0.06); transition: background 0.25s; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
@@ -172,9 +172,9 @@
       </div>
       <div class="card" role="button" tabindex="0" data-idx="1" id="theory-scaffolded-learning" onclick="toggleProject(this)">
         <span class="card-num">02</span>
-        <h3 class="card-title">Theory-Scaffolded Learning</h3>
+        <h3 class="card-title">Theory-Scaffolded Learning: Embedding Chemistry Knowledge into Predictive Models</h3>
         <span class="card-hint">+</span>
-        <p class="sr-summary">Theory-Scaffolded Learning: Embedding Chemistry Knowledge into Predictive Models. A theory-scaffolded model for chemistry that combines the generalization power of scientific theory with the flexibility of neural networks trained on experimental reaction data.</p>
+        <p class="sr-summary">A theory-scaffolded model for chemistry that combines the generalization power of scientific theory with the flexibility of neural networks trained on experimental reaction data.</p>
       </div>
       <div class="expand-row" id="er-A"><div class="expand-inner" id="er-A-inner"></div></div>
 
