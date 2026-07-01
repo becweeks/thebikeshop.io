@@ -6,6 +6,7 @@
   <title>The Bike Shop</title>
   <meta name="description" content="Building algorithms that enhance human capacity. A research lab at the intersection of economics and computer science." />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preload" as="image" href="Bike-Shop-splash-light.jpg" fetchpriority="high" />
   <meta property="og:title" content="The Bike Shop" />
   <meta property="og:description" content="Building algorithms that enhance human capacity. A research lab at the intersection of economics and computer science." />
   <meta property="og:url" content="https://thebikeshop.io" />
@@ -44,7 +45,7 @@
       --eggshell: #FFF6D4;
       --eggshell-dim: rgba(255,246,212,0.75);
       --eggshell-faint: rgba(255,246,212,0.15);
-      --splash-fallback-peach: #ffc77e;
+      --splash-fallback-peach: #b58a61;
     }
 
     html, body { height: 100%; background: var(--splash-fallback-peach); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden; }
@@ -109,7 +110,7 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 
 <div class="bg">
-    <img src="Bike-Shop-splash-light.jpg" alt="" role="presentation" />
+    <img src="Bike-Shop-splash-light.jpg" alt="" role="presentation" fetchpriority="high" decoding="async" />
   </div>
 
 <div class="page">
