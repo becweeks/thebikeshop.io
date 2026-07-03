@@ -3,9 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add("js");</script>
   <title>What We Do – The Bike Shop</title>
   <meta name="description" content="We build bicycles for the mind — algorithms and AI that enhance human capacity, not replace it." />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#FFFDF0" />
+  <link rel="canonical" href="https://thebikeshop.io/what-we-do.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="What We Do – The Bike Shop" />
+  <meta property="og:description" content="We build bicycles for the mind — algorithms and AI that enhance human capacity, not replace it." />
+  <meta property="og:url" content="https://thebikeshop.io/what-we-do.html" />
+  <meta property="og:image" content="https://thebikeshop.io/og-image.jpg" />
+  <meta property="og:image:alt" content="The Bike Shop" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="What We Do – The Bike Shop" />
+  <meta name="twitter:description" content="We build bicycles for the mind — algorithms and AI that enhance human capacity, not replace it." />
+  <meta name="twitter:image" content="https://thebikeshop.io/og-image.jpg" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -22,7 +38,7 @@
 </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --soil: #4D271B; --eggshell: #FFF6D4; --eggshell-bg: #FFFDF0; --gold: #C9A84C; }
+    :root { --soil: #4D271B; --eggshell: #FFF6D4; --eggshell-bg: #FFFDF0; --gold: #C9A84C; --measure: 40rem; }
     html { scroll-behavior: smooth; }
     body { background: var(--eggshell-bg); color: var(--soil); font-family: Georgia, serif; }
 
@@ -60,32 +76,40 @@
 
     /* MAIN */
     .main { padding: 8rem 2.5rem 5rem; max-width: 1200px; margin: 0 auto; }
-    .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(77,39,27,0.45); margin-bottom: 2rem; }
-    h1 { font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 400; font-style: italic; line-height: 1.05; letter-spacing: -0.01em; color: var(--soil); margin-bottom: 3rem; }
+    .label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(77,39,27,0.7); margin-bottom: 2rem; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 400; font-style: italic; line-height: 1.1; color: var(--soil); margin-bottom: 3rem; }
     .rule { width: 48px; height: 1px; background: rgba(77,39,27,0.2); margin-bottom: 3rem; }
 
-    .pullquote { border-left: 3px solid var(--gold); padding-left: 2rem; margin-bottom: 2.5rem; }
-    .pullquote p { font-style: italic; font-size: clamp(1rem, 1.8vw, 1.15rem); line-height: 1.7; color: rgba(77,39,27,0.75); margin-bottom: 1.2rem; }
-    .pullquote p:last-child { margin-bottom: 0; }
-
-    .body-text { font-size: clamp(1rem, 1.6vw, 1.1rem); line-height: 1.75; color: var(--soil); margin-bottom: 2rem; }
+    /* One consistent reading column for the whole essay */
+    .body-text { font-size: clamp(1rem, 1.6vw, 1.1rem); line-height: 1.8; color: var(--soil); margin-bottom: 1.6rem; max-width: var(--measure); }
     .body-text em { font-style: italic; }
 
-    .figure { margin: 2.5rem 0; }
-    .figure { text-align: center; }
-    .figure img { width: 100%; max-width: 600px; height: auto; display: inline-block; }
-    .figure figcaption { text-align: left; max-width: 600px; margin: 0 auto; }
-    .figure figcaption { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; color: rgba(77,39,27,0.5); margin-top: 0.75rem; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .figure figcaption a { color: rgba(77,39,27,0.6); text-underline-offset: 3px; }
+    /* Mid-narrative emphasis — larger, but same column as the body */
+    .lede { font-size: clamp(1.3rem, 2.4vw, 1.6rem); line-height: 1.5; color: var(--soil); margin: 2.2rem 0; max-width: var(--measure); }
+    .lede em { font-style: italic; }
+
+    /* The key phrase — gold highlighter behind the text, kept dark and readable */
+    .phrase { font-style: italic; font-weight: 500; background-color: rgba(201,168,76,0.5); padding: 0.05em 0.18em; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+    /* Rhetorical pivot into the mission statement */
+    .turn { font-family: Georgia, serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.35; color: var(--soil); margin: 3rem 0 2.5rem; max-width: var(--measure); }
+
+    /* Figure sits in the same reading column; image centered within it */
+    .figure { max-width: var(--measure); margin: 2.5rem 0; text-align: center; }
+    .figure img { width: 100%; max-width: 500px; height: auto; display: inline-block; }
+    .figure figcaption { font-family: 'Helvetica Neue', sans-serif; font-size: 0.72rem; color: rgba(77,39,27,0.68); margin: 0.75rem auto 0; line-height: 1.5; max-width: 500px; text-align: left; }
+    .figure figcaption a { color: rgba(77,39,27,0.78); text-underline-offset: 3px; }
     .figure figcaption a:hover { color: var(--soil); }
 
-    .statement { background: var(--soil); color: var(--eggshell); padding: 2.5rem 3rem; margin: 2.5rem 0; }
+    .statement { background: var(--soil); color: var(--eggshell); padding: 2.5rem 3rem; margin: 2.5rem 0; max-width: calc(var(--measure) + 6rem); }
     .statement p { font-size: clamp(1.05rem, 1.8vw, 1.2rem); line-height: 1.7; }
     .statement strong { color: var(--gold); font-weight: 400; font-style: italic; }
 
-    /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.75s ease, transform 0.75s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* REVEAL — hidden only once JS is confirmed (html.js), so content is never
+       invisible if JS is blocked; reduced-motion users skip the animation. */
+    .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .js .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; } }
 
     /* FOOTER */
     .footer { background: var(--soil); padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
@@ -116,7 +140,7 @@
 
 <nav class="nav" aria-label="Main navigation">
   <a href="/">
-    <img class="nav-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-SOIL.png" alt="The Bike Shop" />
+    <img class="nav-logo" width="435" height="80" src="images/MIT_THEBIKESHOP_LOGO-SOIL.png" alt="The Bike Shop" />
   </a>
   <div class="nav-right">
     <ul class="nav-links">
@@ -146,24 +170,25 @@
 
   <div class="rule reveal"></div>
 
-  <div class="pullquote reveal">
-    <p>The March 1973 issue of <em>Scientific American</em> included a curious infographic. It charted the efficiency of animal locomotion: the kilocalories needed to move a kilogram a kilometer. Least efficient animal: the mouse. Most efficient, surprisingly: the salmon.</p>
-    <p>The curious part was an outlier. Peak efficiency belonged to something that was not properly an animal. A point on the graph that was simply labeled "Man on Bicycle." It stood out from all other animals (including humans au naturel, who are of middling efficiency).</p>
-  </div>
+  <p class="body-text reveal">The March 1973 issue of <em>Scientific American</em> included a curious infographic. It charted the efficiency of animal locomotion — the kilocalories needed to move a kilogram a kilometer. Least efficient animal: the mouse. Most efficient, surprisingly: the salmon.</p>
 
-  <p class="body-text reveal">That figure, ostensibly about kinematics, occupies a cherished place in the folklore of computer science because of what it inspired — a vision of what computers could be: <em>bicycles for the mind.</em></p>
+  <p class="lede reveal">But the curious part was an outlier. Peak efficiency belonged to something that was not properly an animal — a point on the graph simply labeled “Man on Bicycle.”</p>
+
+  <p class="body-text reveal">It stood out from every other animal, including humans <em>au naturel</em>, who are of middling efficiency.</p>
 
   <figure class="figure reveal">
-    <img src="https://sites.mit.edu/thebikeshop/files/2026/03/scientific-american-graph.jpg" alt="Scientific American locomotion efficiency chart, March 1973" />
-    <figcaption>S. S. Wilson, "Bicycle Technology," <em>Scientific American</em>, Vol. 228, No. 3 (March 1973), p. 81. <a href="https://www.scientificamerican.com/article/a-human-on-a-bicycle-is-among-the-most-efficient-forms-of-travel-in-the/" target="_blank" rel="noopener">Scientific American updated the classic chart in 2025 →</a></figcaption>
+    <img src="images/scientific-american-graph.jpg" width="500" height="596" loading="lazy" decoding="async" alt="Scientific American's 1973 chart of the energy cost of locomotion by body weight, with 'Man on Bicycle' plotted as the most efficient traveler of all." />
+    <figcaption>S. S. Wilson, “Bicycle Technology,” <em>Scientific American</em>, Vol. 228, No. 3 (March 1973), p. 81. <a href="https://www.scientificamerican.com/article/a-human-on-a-bicycle-is-among-the-most-efficient-forms-of-travel-in-the/" target="_blank" rel="noopener">Scientific American updated the classic chart in 2025 →</a></figcaption>
   </figure>
+
+  <p class="body-text reveal">That figure, ostensibly about kinematics, occupies a cherished place in the folklore of computer science because of what it inspired — a vision of what computers could be: <span class="phrase">bicycles for the mind</span>.</p>
 
   <p class="body-text reveal">Unfortunately, a different vision animates AI today: replacements for the mind. To us, that is a pretty uninspiring vision of the future. Automation cuts costs but does little to raise the ceiling. Merely replicating human capability also means we are limited by the limits of human capacity.</p>
 
-  <p class="body-text reveal">Why settle for those limits?</p>
+  <p class="turn reveal">Why settle for those limits?</p>
 
   <div class="statement reveal">
-    <p>At The Bike Shop, we are committed to building <strong>bicycles</strong> — algorithms and AI that <strong>enhance</strong> human capacity, not replace it.</p>
+    <p>At The Bike Shop, we are committed to building <strong>bicycles for the mind</strong> — algorithms and AI that <strong>enhance human capacity</strong>, not replace it.</p>
   </div>
 
   <p class="body-text reveal">Based at MIT and the University of Chicago, The Bike Shop brings together economists and computer scientists to tackle core social and computational challenges.</p>
@@ -172,7 +197,7 @@
 
 <footer class="footer">
   <div class="footer-left">
-    <img class="footer-logo" src="https://sites.mit.edu/thebikeshop/files/2026/03/MIT_THEBIKESHOP_LOGO-EGGSHELL.png" alt="The Bike Shop" />
+    <img class="footer-logo" loading="lazy" width="436" height="80" src="images/MIT_THEBIKESHOP_LOGO-EGGSHELL.png" alt="The Bike Shop" />
     <span>The Bike Shop</span>
     <span>Massachusetts Institute of Technology &amp; University of Chicago</span>
       <div class="footer-social">
@@ -187,14 +212,15 @@
 </footer>
 
 <script>
-// Reveal on scroll
-(function(){
-  var els = document.querySelectorAll('.reveal');
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  els.forEach(function(el){ obs.observe(el); });
-})();
+  // Fade content in as it scrolls into view
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { for (var i=0;i<els.length;i++) els[i].classList.add('visible'); return; }
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el){ obs.observe(el); });
+  })();
 
 // Hamburger
 window.toggleMenu = function() {
