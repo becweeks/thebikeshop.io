@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add("js");</script>
   <title>Projects – The Bike Shop</title>
   <meta name="description" content="A sample of the bicycles for the mind we're building — from education to criminal justice to chemistry." />
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -101,6 +102,13 @@
 
     /* PARTNER BAND */
 
+    /* REVEAL — hidden only once JS is confirmed (html.js), so content is never
+       invisible if JS is blocked; reduced-motion users skip the animation. */
+    .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .js .reveal.visible { opacity: 1; transform: none; }
+    .js .card.reveal { transition: opacity 0.7s ease, transform 0.7s ease, background 0.25s ease; }
+    @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; } }
+
     /* FOOTER */
     .footer { background: var(--soil); padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
     .footer-left { display: flex; flex-direction: column; gap: 0.45rem; align-items: flex-start; }
@@ -157,21 +165,21 @@
 <div id="main">
 
   <div class="hero">
-    <p class="hero-label">Projects</p>
-    <h1>Our Work</h1>
-    <p style="margin-top: 1.5rem;">We'll have more details of our projects soon; for now, here is a sample of the "bicycles for the mind" we're building.</p>
+    <p class="hero-label reveal">Projects</p>
+    <h1 class="reveal">Our Work</h1>
+    <p class="reveal" style="margin-top: 1.5rem;">We'll have more details of our projects soon; for now, here is a sample of the "bicycles for the mind" we're building.</p>
   </div>
 
   <div class="grid-section">
     <div class="grid" id="project-grid">
 
-      <div class="card" role="button" tabindex="0" data-idx="0" id="education-foundation-model" onclick="toggleProject(this)">
+      <div class="card reveal" role="button" tabindex="0" data-idx="0" id="education-foundation-model" onclick="toggleProject(this)">
         <span class="card-num">01</span>
         <h3 class="card-title">Education Foundation Model</h3>
         <span class="card-hint">+</span>
         <p class="sr-summary">A model trained on novel student thought processes that pinpoints the specific source of a student's confusion, turning assessment into a rich diagnostic map so teachers can move past trial-and-error in every pedagogical decision.</p>
       </div>
-      <div class="card" role="button" tabindex="0" data-idx="1" id="theory-scaffolded-learning" onclick="toggleProject(this)">
+      <div class="card reveal" role="button" tabindex="0" data-idx="1" id="theory-scaffolded-learning" onclick="toggleProject(this)">
         <span class="card-num">02</span>
         <h3 class="card-title">Theory-Scaffolded Learning: Embedding Chemistry Knowledge into Predictive Models</h3>
         <span class="card-hint">+</span>
@@ -179,13 +187,13 @@
       </div>
       <div class="expand-row" id="er-A"><div class="expand-inner" id="er-A-inner"></div></div>
 
-      <div class="card" role="button" tabindex="0" data-idx="2" id="pre-trial-bail-decision-making" onclick="toggleProject(this)">
+      <div class="card reveal" role="button" tabindex="0" data-idx="2" id="pre-trial-bail-decision-making" onclick="toggleProject(this)">
         <span class="card-num">03</span>
         <h3 class="card-title">Pre-Trial Bail Decision-Making</h3>
         <span class="card-hint">+</span>
         <p class="sr-summary">An algorithmic decision aid built with the University of Chicago Crime Lab and the New York City Mayor's Office of Criminal Justice that helps judges prioritize pre-trial detention for truly high-risk defendants, used hundreds of thousands of times since 2019.</p>
       </div>
-      <div class="card" role="button" tabindex="0" data-idx="3" id="learning-from-the-best" onclick="toggleProject(this)">
+      <div class="card reveal" role="button" tabindex="0" data-idx="3" id="learning-from-the-best" onclick="toggleProject(this)">
         <span class="card-num">04</span>
         <h3 class="card-title">Learning from the Best: What Top Investigators See That Others Miss</h3>
         <span class="card-hint">+</span>
@@ -193,13 +201,13 @@
       </div>
       <div class="expand-row" id="er-B"><div class="expand-inner" id="er-B-inner"></div></div>
 
-      <div class="card" role="button" tabindex="0" data-idx="4" id="automata-induction" onclick="toggleProject(this)">
+      <div class="card reveal" role="button" tabindex="0" data-idx="4" id="automata-induction" onclick="toggleProject(this)">
         <span class="card-num">05</span>
         <h3 class="card-title">From Next-Token Prediction to Automata Induction</h3>
         <span class="card-hint">+</span>
         <p class="sr-summary">An econometric framework that distills black-box sequence predictors, including transformers, into compact, interpretable finite automata, giving researchers and policymakers a principled way to extract and act on insights from sequence data.</p>
       </div>
-      <div class="card" role="button" tabindex="0" data-idx="5" id="situational-decision-making" onclick="toggleProject(this)">
+      <div class="card reveal" role="button" tabindex="0" data-idx="5" id="situational-decision-making" onclick="toggleProject(this)">
         <span class="card-num">06</span>
         <h3 class="card-title">Situational Decision-Making</h3>
         <span class="card-hint">+</span>
@@ -228,6 +236,16 @@
 </footer>
 
 <script>
+  // Fade content in as it scrolls into view
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { for (var i=0;i<els.length;i++) els[i].classList.add('visible'); return; }
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el){ obs.observe(el); });
+  })();
+
 (function(){
   var rowMap = ['A','A','B','B','C','C'];
 
